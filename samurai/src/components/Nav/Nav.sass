@@ -1,0 +1,29 @@
+@import ../../Variables
+
+.sidebar
+  grid-area: sd
+  padding: 15px 10px 0 0
+  .nav
+    margin-bottom: 30px
+    li
+      &:hover
+        background-color: $link-hover
+      span
+        border: 1px solid $icon-main
+        border-radius: 50%
+        color: $icon-main
+        width: 19px
+        height: 19px
+        margin-right: 10px
+      a
+        font-size: $normal-text-secondary
+        color: $text-primary
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        padding: 10px 8px 10px 8px
+        border-left: 2px solid transparent
+        &.active
+          border-left: 2px solid $icon-main
+
+

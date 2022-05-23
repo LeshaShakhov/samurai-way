@@ -1,0 +1,26 @@
+@import ../../Variables
+
+.header-inner
+  grid-area: inn
+  padding: 15px 0
+  display: flex
+.header
+  display: grid
+  grid-template-columns: repeat(9, 1fr)
+  grid-area: hd
+  grid-template-areas: ".. inn inn inn inn inn inn inn .."
+  background-color: #fff
+.logo
+  display: flex
+  align-items: center
+  justify-content: center
+  .first-part
+    width: 50px
+    height: 50px
+    background-color: $main-blue
+    color: #fff
+    font-size: 30px
+    font-weight: bold
+  .second-part
+    margin-left: 10px
+    font-size: 25px

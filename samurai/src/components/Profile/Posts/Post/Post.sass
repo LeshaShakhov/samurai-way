@@ -1,0 +1,33 @@
+@import ../../../../Variables
+
+.post
+  margin-bottom: 15px
+  .rounded-avatar
+    flex-grow: 0
+  .message
+    .inner
+      flex-grow: 1
+      padding: 0 15px
+      .name
+        font-size: $big-text-primary
+        margin-bottom: 10px
+      .text
+        color: $text-primary
+        font-size: $normal-text-primary
+        flex-grow: 1
+    .likes
+      font-size: 12px
+      color: $icon-secondary
+      display: flex
+      align-items: flex-end
+      position: relative
+      padding-bottom: 3px
+      flex-grow: 0
+      cursor: pointer
+      &:hover
+        color: $main-link
+      .icon
+        font-size: 30px
+        line-height: 14px
+      .value
+        bottom: 0
