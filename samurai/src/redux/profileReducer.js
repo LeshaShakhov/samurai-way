@@ -1,5 +1,6 @@
 const ADD_POST = 'ADD-POST';
 const CHANGE_TEXT_AREA_POST = 'CHANGE-TEXT-AREA-POST';
+const SET_PROFILE = 'SET_PROFILE';
 
 let initialState = {
     newPostText: '',
@@ -14,6 +15,7 @@ let initialState = {
             {id: 3, text: 'I have very nice day!', likes: 10}
         ],
     },
+    profile: null,
 }
 
 let profileReducer = (state = initialState, action) => {
@@ -33,6 +35,9 @@ let profileReducer = (state = initialState, action) => {
         case CHANGE_TEXT_AREA_POST: {
             return {...state, newPostText: action.text};
         }
+        case SET_PROFILE: {
+            return {...state, profile: action.profile};
+        }
         default:
             return state
     }
@@ -43,5 +48,6 @@ export const changeTextAreaPost = (text) => ({
     type: CHANGE_TEXT_AREA_POST,
     text: text,
 })
+export const setProfile = (profile) => ({type: SET_PROFILE, profile:profile})
 
 export default profileReducer;

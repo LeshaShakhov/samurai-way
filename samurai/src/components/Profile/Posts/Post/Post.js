@@ -1,14 +1,13 @@
 import React from "react";
 import "./Post.css";
+import RoundedAvatar from "../../../Common/RoundedAvatar/RoundedAvatar";
 
 const Post = (props) => {
     const {name, userImage, message, likesCount} = props;
     return (
         <div className="post app-block">
             <div className='message flex'>
-                <div className="rounded-avatar">
-                    <img src={userImage} alt=""/>
-                </div>
+                <RoundedAvatar/>
                 <div className="inner">
                     <div className="name">
                         {name}

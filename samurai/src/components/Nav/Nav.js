@@ -9,7 +9,7 @@ const Nav = (props) => {
         <aside className='sidebar'>
             <nav className='nav'>
                 <ul>
-                    <li><NavLink to="/"><span className='flex-center-center'>P</span>Profile</NavLink></li>
+                    <li><NavLink to="/profile"><span className='flex-center-center'>P</span>Profile</NavLink></li>
                     <li><NavLink to="messages"><span className='flex-center-center'>M</span>Messages</NavLink></li>
                     <li><NavLink to="users"><span className='flex-center-center'>F</span>Find users</NavLink></li>
                     <li><NavLink to="news"><span className='flex-center-center'>N</span>News</NavLink></li>

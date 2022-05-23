@@ -4,10 +4,9 @@ import UserInfo from "./UserInfo/UserInfo";
 import PostsContainer from "./Posts/PostsContainer";
 
 const Profile = (props) => {
-    const user = props.user;
     return (
         <section>
-            <UserInfo user={user}/>
+            <UserInfo profile={props.profile.profile}/>
             <PostsContainer/>
         </section>
     )

@@ -2,25 +2,38 @@
 
 .header-inner
   grid-area: inn
-  padding: 15px 0
   display: flex
+  align-items: center
+  position: relative
 .header
   display: grid
   grid-template-columns: repeat(9, 1fr)
   grid-area: hd
   grid-template-areas: ".. inn inn inn inn inn inn inn .."
   background-color: #fff
+  height: 55px
+  .rounded-avatar
+    width: 35px
+    height: 35px
+    margin-right: 8px
+  .sign-in
+    a
+      font-size: $normal-text-primary
+      color: $main-link
+      &:hover
+        text-decoration: underline
 .logo
   display: flex
   align-items: center
   justify-content: center
   .first-part
-    width: 50px
-    height: 50px
+    width: 40px
+    height: 40px
     background-color: $main-blue
     color: #fff
-    font-size: 30px
+    font-size: 26px
     font-weight: bold
   .second-part
-    margin-left: 10px
-    font-size: 25px
+    margin-left: 6px
+    font-size: 18px
+

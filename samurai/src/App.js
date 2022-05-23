@@ -1,6 +1,4 @@
-import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
-import Profile from "./components/Profile/Profile";
 import './App.css';
 import './Reset.css';
 import {Route, Routes} from "react-router-dom";
@@ -9,18 +7,20 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import MessagesContainer from "./components/Messages/MessagesContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
+import React from "react";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 function App(props) {
     const friends = props.state.messages.users.slice(0, 3);
-    const user = props.state.profile.user;
     return (
         <div className="App">
-            <Header/>
+            <HeaderContainer/>
             <Nav friends={friends}/>
             <div className='content'>
                 <Routes>
-                    <Route path='/' element={
-                            <Profile user={user}/>
+                    <Route path='/profile/:userId' element={
+                            <ProfileContainer/>
                         }
                     />
 

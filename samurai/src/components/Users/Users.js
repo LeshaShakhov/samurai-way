@@ -2,6 +2,8 @@ import React from "react";
 import Range from "../../Utils/Range";
 import userImage from "../../assets/avatar.png";
 import './Users.css'
+import {NavLink} from "react-router-dom";
+import RoundedAvatar from "../Common/RoundedAvatar/RoundedAvatar";
 
 const Users = (props) => {
     const {
@@ -27,10 +29,12 @@ const Users = (props) => {
                     Range(1 + (5 * paginationValue), 5 + (5 * paginationValue))
                         .map(page => {
                             if (page * usersPerPage <= totalUsersCount) {
-                                return <span key={page} className={(page === currentPage) ? 'active' : ''}
+                                return <span key={page}
+                                             className={(page === currentPage) ? 'active' : ''}
                                              onClick={() => {
                                                  onPageChanged(page)
-                                             }}>{page}</span>
+                                             }}>{page}
+                                        </span>
                             }
                         })
                 }
@@ -43,12 +47,11 @@ const Users = (props) => {
                     return (
                         <div key={user.id} className='app-block'>
                             <div className='friend-item flex'>
-                                <div className="rounded-avatar">
-                                    <img
-                                        src={user.photos.small || userImage}
-                                        alt=""
+                                <NavLink to={`/profile/${user.id}`}>
+                                    <RoundedAvatar
+                                        src={user.photos.small}
                                     />
-                                </div>
+                                </NavLink>
                                 <div className='inner column-between'>
                                     <div className="name">
                                         {user.name}

@@ -27,6 +27,11 @@ body {
   justify-content: space-between;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .text-center {
   text-align: center;
 }
@@ -67,23 +72,6 @@ body {
   margin-bottom: 20px;
 }
 
-.rounded-avatar {
-  width: 75px;
-  height: 75px;
-  flex-shrink: 0;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-}
-.rounded-avatar img {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 100%;
-}
-
 .form {
   width: 100%;
   display: flex;
@@ -118,6 +106,15 @@ body {
 .btn-primary.blue:hover {
   background-color: #5181b8;
   opacity: 0.88;
+}
+
+.triangle.down {
+  width: 0;
+  height: 0;
+  border: 0 solid transparent;
+  border-left-width: 6px;
+  border-right-width: 6px;
+  border-top: 6px solid #829ebe;
 }
 
 /*# sourceMappingURL=App.css.map */
