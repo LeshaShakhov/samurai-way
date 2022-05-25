@@ -1,10 +1,14 @@
 import React from "react";
+import LoginForm from "./LoginForm";
 
-const LoginPage = (props) => {
+const LoginPage = () => {
     return(
-        <section>
-            <div className='text-title'>Login</div>
-        </section>
+        <div className='login-page flex-center-center'>
+            <div className='login '>
+                <div className="text-title text-center">Login</div>
+                <LoginForm/>
+            </div>
+        </div>
     )
 }
 export default LoginPage;

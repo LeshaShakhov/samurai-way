@@ -26,16 +26,25 @@ export const requestUsersApi = {
         return instance.get('auth/me')
             .then(response => response.data)
     },
+    login(data){
+        return instance.post('/auth/login',
+            {email: data.email, password: data.password, rememberMe:  data.rememberMe }
+        )
+    },
+    logout(){
+        return instance.delete('/auth/login')
+    }
 };
 
 export const requestProfileApi = {
     getUserProfile(id) {
         return instance.get('profile/' + id)
-            .then(response => response.data )
     },
     getUserStatus(id) {
         return instance.get('profile/status/' + id)
-            .then(response => response.data)
+    },
+    updateUserStatus(status) {
+        return instance.put('profile/status', {status: status})
     },
 }
 

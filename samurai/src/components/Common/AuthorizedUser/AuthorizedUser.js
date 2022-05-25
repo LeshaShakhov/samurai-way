@@ -22,6 +22,7 @@ class AuthorizedUser extends React.Component{
                         <p>Id: {this.props.id}</p>
                         <p>Login: {this.props.login}</p>
                         <p>Email: {this.props.email}</p>
+                        <a className='logout' onClick={this.props.logout}>Logout</a>
                     </div>
                 }
             </div>

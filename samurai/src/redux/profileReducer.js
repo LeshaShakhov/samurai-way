@@ -3,7 +3,7 @@ import {requestProfileApi} from "../requestApi/api";
 const ADD_POST = 'ADD-POST';
 const CHANGE_TEXT_AREA_POST = 'CHANGE-TEXT-AREA-POST';
 const SET_PROFILE = 'SET_PROFILE';
-const SET_USER_STATUS = '';
+const SET_USER_STATUS = 'SET_USER_STATUS';
 
 let initialState = {
     newPostText: '',
@@ -19,7 +19,7 @@ let initialState = {
         ],
     },
     profile: null,
-    status: null,
+    status: '',
 }
 
 let profileReducer = (state = initialState, action) => {
@@ -55,17 +55,27 @@ export const changeTextAreaPost = (text) => ({
     type: CHANGE_TEXT_AREA_POST,
     text: text,
 });
-export const setUsersStatus = (status) => ({type: SET_USER_STATUS, status});
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const setProfile = (profile) => ({type: SET_PROFILE, profile:profile})
 
 export const setProfileTC = (id) => (dispatch) => {
     requestProfileApi.getUserProfile(id)
-        .then(data => {
-            dispatch(setProfile(data));
+        .then(response => {
+            dispatch(setProfile(response.data));
         })
+}
+export const getUserStatus = (id) => (dispatch) => {
     requestProfileApi.getUserStatus(id)
-        .then(data => {
-            dispatch(setUsersStatus(data))
+        .then(response => {
+            dispatch(setUserStatus(response.data));
+        })
+}
+export const updateUserStatus = (status) => (dispatch) => {
+    requestProfileApi.updateUserStatus(status)
+        .then(response => {
+            debugger
+            !response.data.resultCode &&
+            dispatch(setUserStatus(status));
         })
 }
 

@@ -42,8 +42,6 @@ const mapStateToProps = (state) =>{
     }
 };
 
-const MessagesContainer = (Messages);
-
 
 export default compose(
         withAuthRedirect,

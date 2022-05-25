@@ -24,7 +24,10 @@ const UserInfo = (props) => {
                 <div className='text-title'>
                     {props.profile.fullName}
                 </div>
-                <Status status={props.status}/>
+                <Status
+                    updateUserStatus={props.updateUserStatus}
+                    status={props.status}
+                />
                 <div className="details">
                     <div className="keys">
                         <div>Information:</div>
