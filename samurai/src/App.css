@@ -99,6 +99,9 @@ body {
 .btn-primary:hover {
   background-color: #dae2ea;
 }
+.btn-primary:disabled {
+  opacity: 0.5;
+}
 .btn-primary.blue {
   background-color: #5181b8;
   color: #fff;
@@ -115,6 +118,11 @@ body {
   border-left-width: 6px;
   border-right-width: 6px;
   border-top: 6px solid #829ebe;
+}
+
+.status-text {
+  font-size: 13px;
+  color: #939393;
 }
 
 /*# sourceMappingURL=App.css.map */

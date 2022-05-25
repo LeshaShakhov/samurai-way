@@ -6,7 +6,7 @@ import PostsContainer from "./Posts/PostsContainer";
 const Profile = (props) => {
     return (
         <section>
-            <UserInfo profile={props.profile.profile}/>
+            <UserInfo status={props.status} myId={props.myId} profile={props.profile.profile}/>
             <PostsContainer/>
         </section>
     )

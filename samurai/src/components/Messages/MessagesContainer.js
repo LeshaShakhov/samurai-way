@@ -1,13 +1,13 @@
 import React from "react";
 import './Messages.css'
 import {
-    addMessage,
-    addMessageActionCreator, changeCurrentConversation,
-    changeCurrentConversationActionCreator, changeTextAreaMessage,
-    changeTextAreaMessageActionCreator
+    addMessage, changeCurrentConversation,
+    changeTextAreaMessage,
 } from "../../redux/messagesReducer";
 import Messages from "./Messages";
 import {connect} from "react-redux";
+import withAuthRedirect from "../../Utils/withAuthRedirect";
+import {compose} from "redux";
 
 const mapStateToProps = (state) =>{
     const {
@@ -42,11 +42,10 @@ const mapStateToProps = (state) =>{
     }
 };
 
+const MessagesContainer = (Messages);
 
-let MessagesContainer = connect(mapStateToProps, {
-    addMessage,
-    changeTextAreaMessage,
-    changeCurrentConversation,
-})(Messages);
 
-export default MessagesContainer;
+export default compose(
+        withAuthRedirect,
+        connect(mapStateToProps, { addMessage, changeTextAreaMessage, changeCurrentConversation,})
+    )(Messages);

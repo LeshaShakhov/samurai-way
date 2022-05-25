@@ -66,6 +66,8 @@ body
   outline: none
   &:hover
     background-color: $button-hover
+  &:disabled
+    opacity: .5
   &.blue
     background-color: $icon-main
     color: #fff
@@ -80,4 +82,7 @@ body
     border-left-width: 6px
     border-right-width: 6px
     border-top: 6px solid #829ebe
+.status-text
+  font-size: $normal-text-primary
+  color: $gray
 

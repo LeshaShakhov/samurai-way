@@ -1,27 +1,34 @@
 import React from "react";
 import RoundedAvatar from "../RoundedAvatar/RoundedAvatar";
 import './AuthorizedUser.css'
-import connect from "react-redux";
 
-const AuthorizedUser = (props)=> {
-    return (
-        <div onClick={ props.onClick } className="auth flex-center-center">
-            <RoundedAvatar/><div className='triangle down'/>
-            {
-                props.isOpen &&
-                <div className="dropdown">
-                    <p>Id: {props.id}</p>
-                    <p>Login: {props.login}</p>
-                    <p>Email: {props.email}</p>
-                </div>
-            }
-        </div>
-    )
-}
-const mapStateToProps = (state) =>{
-    return {
-
+class AuthorizedUser extends React.Component{
+    state = {
+        dropDown: false,
     }
+
+    toggleDropDown = () => {
+        this.setState({
+            dropDown: !this.state.dropDown
+        })
+    }
+    render(){
+        return (
+            <div className="auth flex-center-center">
+                <div  onClick={ this.toggleDropDown } className='flex-center-center'><RoundedAvatar/><div className='triangle down'/></div>
+                {
+                    this.state.dropDown &&
+                    <div className="dropdown">
+                        <p>Id: {this.props.id}</p>
+                        <p>Login: {this.props.login}</p>
+                        <p>Email: {this.props.email}</p>
+                    </div>
+                }
+            </div>
+        )
+    }
+
 }
+
 
 export default AuthorizedUser;

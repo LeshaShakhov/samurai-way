@@ -8,17 +8,13 @@ import instagram from "../../../assets/social_icons/instagram.png";
 import twitter from "../../../assets/social_icons/twitter.png";
 import vkontakte from "../../../assets/social_icons/vkontakte.png";
 import youtube from "../../../assets/social_icons/youtube.png";
+import Status from "./Status";
 
 const UserInfo = (props) => {
     if (!props.profile) {
         return <Preloader/>
     }
     return (<section>
-        <div className="bg app-block">
-            <img className='full-width'
-                 src="https://i.ucrazy.ru/files/i/2007.6.29/thumbs/9x_media__1280__triple_horizontal__grand_canyon.jpg"
-                 alt=""/>
-        </div>
         <div className="user-info app-block">
             <div className="avatar">
                 <img className='avatar' src={props.profile.photos.large ? props.profile.photos.large : avatar} alt=""/>
@@ -28,6 +24,7 @@ const UserInfo = (props) => {
                 <div className='text-title'>
                     {props.profile.fullName}
                 </div>
+                <Status status={props.status}/>
                 <div className="details">
                     <div className="keys">
                         <div>Information:</div>

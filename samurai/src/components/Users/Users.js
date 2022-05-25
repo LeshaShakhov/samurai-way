@@ -1,6 +1,5 @@
 import React from "react";
 import Range from "../../Utils/Range";
-import userImage from "../../assets/avatar.png";
 import './Users.css'
 import {NavLink} from "react-router-dom";
 import RoundedAvatar from "../Common/RoundedAvatar/RoundedAvatar";
@@ -16,7 +15,8 @@ const Users = (props) => {
         decreasePaginationValue,
         paginationValue,
         currentPage,
-        onPageChanged
+        onPageChanged,
+        followingInProgress
     } = props;
     return (
         <section>
@@ -56,7 +56,7 @@ const Users = (props) => {
                                     <div className="name">
                                         {user.name}
                                     </div>
-                                    <div className="status">
+                                    <div className="status-text">
                                         {user.status || 'Статуса нет'}
                                     </div>
                                 </div>
@@ -66,10 +66,10 @@ const Users = (props) => {
                                     </div>
                                     <div className="follow-btn text-right">
                                         {
-                                            user.follow
-                                                ? <button onClick={() => unFollow(user.userId)}
+                                            user.followed
+                                                ? <button disabled={followingInProgress.includes(user.id)} onClick={() => unFollow(user.id)}
                                                           className='btn-primary'>Unfollow</button>
-                                                : <button onClick={() => follow(user.userId)}
+                                                : <button disabled={followingInProgress.includes(user.id)} onClick={() => follow(user.id)}
                                                           className='btn-primary'>Follow</button>
                                         }
                                     </div>

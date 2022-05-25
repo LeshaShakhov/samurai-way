@@ -10,6 +10,7 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import React from "react";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginPage from "./components/Login/LoginPage";
 
 function App(props) {
     const friends = props.state.messages.users.slice(0, 3);
@@ -19,10 +20,9 @@ function App(props) {
             <Nav friends={friends}/>
             <div className='content'>
                 <Routes>
-                    <Route path='/profile/:userId' element={
-                            <ProfileContainer/>
-                        }
-                    />
+                    <Route path={'/profile'} element={<ProfileContainer/>}>
+                        <Route path={':userId'} element={<ProfileContainer/>}/>
+                    </Route>
 
                     <Route path='/messages/*' element={
                         <MessagesContainer/>
@@ -35,6 +35,8 @@ function App(props) {
                     />
 
                     <Route path='/news' element={<News/>}/>
+
+                    <Route path='/login' element={<LoginPage/>}/>
 
                     <Route path='/music' element={<Music/>}/>
 
