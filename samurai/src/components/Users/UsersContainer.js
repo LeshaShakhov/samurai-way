@@ -3,10 +3,17 @@ import {connect} from "react-redux";
 import {
     decreasePaginationValue, follow, followTC,
     increasePaginationValue, setCurrentPage,
-     setUsersTC, unFollow, unFollowTC
+    setUsersTC, unFollow, unFollowTC
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
+import {
+    getCurrentPage, getFollowingInProgress, getIsFetching,
+    getPaginationValue,
+    getTotalUsersCount,
+    getUsers,
+    getUsersPerPage
+} from "../../redux/selectors/userSelectors";
 
 class UsersContainer extends React.Component {
     onPageChanged = (page) => {
@@ -23,9 +30,6 @@ class UsersContainer extends React.Component {
                     unFollow={this.unFollow}
                     totalUsersCount={this.props.totalUsersCount}
                     usersPerPage={this.props.usersPerPage}
-                    increasePaginationValue={this.props.increasePaginationValue}
-                    decreasePaginationValue={this.props.decreasePaginationValue}
-                    paginationValue={this.props.paginationValue}
                     currentPage={this.props.currentPage}
                     onPageChanged={this.onPageChanged}
                     followingInProgress={this.props.followingInProgress}
@@ -51,13 +55,12 @@ class UsersContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        currentPage: state.usersPage.currentPage,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        usersPerPage: state.usersPage.usersPerPage,
-        paginationValue: state.usersPage.paginationValue,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
+        users: getUsers(state),
+        currentPage: getCurrentPage(state),
+        totalUsersCount: getTotalUsersCount(state),
+        usersPerPage: getUsersPerPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
@@ -65,8 +68,6 @@ export default connect(mapStateToProps, {
     follow,
     unFollow,
     setCurrentPage,
-    increasePaginationValue,
-    decreasePaginationValue,
     setUsersTC,
     followTC,
     unFollowTC

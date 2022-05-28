@@ -5,46 +5,65 @@ import {Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import MessagesContainer from "./components/Messages/MessagesContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import React from "react";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/LoginPage";
+import {initialize} from "./redux/appReducer";
+import {connect} from "react-redux";
+import Preloader from "./components/Common/Preloader/Preloader";
+import withLazyLoading from "./Utils/withLazyLoading";
 
-function App(props) {
-    const friends = props.state.messages.users.slice(0, 3);
-    return (
-        <div className="App">
-            <HeaderContainer/>
-            <Nav friends={friends}/>
-            <div className='content'>
-                <Routes>
-                    <Route path={'/profile'} element={<ProfileContainer/>}>
-                        <Route path={':userId'} element={<ProfileContainer/>}/>
-                    </Route>
+const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
 
-                    <Route path='/messages/*' element={
-                        <MessagesContainer/>
-                    }
-                    />
+class App extends React.Component {
+    componentDidMount() {
+        this.props.initialize();
+    }
 
-                    <Route path='/users' element={
-                        <UsersContainer/>
-                    }
-                    />
+    render() {
+        const friends = this.props.state.messages.users.slice(0, 3);
+        if(!this.props.isInitialized) return <Preloader/>
+        const MessagesContainerWithLazy = withLazyLoading(MessagesContainer);
 
-                    <Route path='/news' element={<News/>}/>
+        return (
+            <div className="App">
+                <HeaderContainer/>
+                <Nav friends={friends}/>
+                <div className='content'>
+                    <Routes>
+                        <Route path={'/profile'} element={<ProfileContainer/>}>
+                            <Route path={':userId'} element={<ProfileContainer/>}/>
+                        </Route>
 
-                    <Route path='/login' element={<LoginPage/>}/>
+                        <Route
+                            path='/messages/*'
+                            element={ <MessagesContainerWithLazy/> }
+                        />
+                        <Route path='/users' element={
+                            <UsersContainer/>
+                        }
+                        />
 
-                    <Route path='/music' element={<Music/>}/>
+                        <Route path='/news' element={<News/>}/>
 
-                    <Route path='/settings' element={<Settings/>}/>
-                </Routes>
+                        <Route path='/login' element={<LoginPage/>}/>
+
+                        <Route path='/music' element={<Music/>}/>
+
+                        <Route path='/settings' element={<Settings/>}/>
+                    </Routes>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return{
+        isInitialized: state.app.isInitialized,
+    }
+}
+
+export default connect(mapStateToProps, {initialize})(App);

@@ -1,36 +1,32 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./Profile.css";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserStatus, setProfileTC, updateUserStatus} from "../../redux/profileReducer";
-import withRouter from "../../Utils/WithRouter";
-import {compose} from "redux";
+import {getUserStatus, setPhotoTC, setProfileTC, updateUserStatus} from "../../redux/profileReducer";
+import {Navigate, useParams} from "react-router";
+import isObjEmpty from "../../Utils/isObjEmpty";
 
 
-class ProfileContainer extends React.Component {
+const ProfileContainer = (props) => {
 
 
+    const preparePageData = (id) =>{
+        props.setProfileTC(id);
+        props.getUserStatus(id);
+    }
+    const params = useParams();
 
-    componentDidMount() {
-        let userId = this.props.router.params.userId || this.props.myId;
+        useEffect(() => {
+        let userId = params.userId || props.myId;
         if(userId){
-            this.props.setProfileTC(userId);
-            this.props.getUserStatus(userId);
+            preparePageData(userId)
         }
-    }
+    }, [params.userId, props.myId])
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.props.myId !== prevProps.myId){
-            this.props.setProfileTC(this.props.myId);
-            this.props.getUserStatus(this.props.myId);
-        }
-    }
-
-    render() {
-        return (
-            <Profile {...this.props}/>
-        )
-    }
+    if(isObjEmpty(params) && !props.myId) return <Navigate to='/login'/>
+    return (
+        <Profile {...props} isOwner= {!params.userId}/>
+    )
 }
 
 const mapStateToProps = (state) => {
@@ -43,7 +39,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default compose(
-        withRouter,
-        connect(mapStateToProps, {setProfileTC, getUserStatus, updateUserStatus})
-)(ProfileContainer);
+export default connect(mapStateToProps, {setProfileTC, getUserStatus, updateUserStatus, setPhotoTC})(ProfileContainer);

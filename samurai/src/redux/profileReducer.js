@@ -1,12 +1,11 @@
 import {requestProfileApi} from "../requestApi/api";
 
 const ADD_POST = 'ADD-POST';
-const CHANGE_TEXT_AREA_POST = 'CHANGE-TEXT-AREA-POST';
 const SET_PROFILE = 'SET_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
+const SET_PHOTO = 'SET_PHOTO';
 
-let initialState = {
-    newPostText: '',
+const initialState = {
     user: {
         userId: 1,
         userName: 'Maxim',
@@ -25,58 +24,57 @@ let initialState = {
 let profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
-            return  {...state,
-                    user: {...state.user,
-                                userPosts:
-                                [
-                                    ...state.user.userPosts,
-                                    {id: ++state.user.userPosts.length, text: state.newPostText, likes: 0}
-                                ]
-                    },
-                    newPostText: '',
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    userPosts:
+                        [
+                            ...state.user.userPosts,
+                            {id: ++state.user.userPosts.length, text: action.post, likes: 0}
+                        ]
+                },
             };
         }
-        case CHANGE_TEXT_AREA_POST: {
-            return {...state, newPostText: action.text};
-        }
+
         case SET_PROFILE: {
             return {...state, profile: action.profile};
         }
         case SET_USER_STATUS: {
             return {...state, status: action.status};
         }
+        case SET_PHOTO: {
+            return {...state, profile: {...state.profile, photos: action.photos}};
+        }
         default:
             return state
     }
 
 }
-export const addPost = () => ({type: ADD_POST});
-export const changeTextAreaPost = (text) => ({
-    type: CHANGE_TEXT_AREA_POST,
-    text: text,
-});
+export const addPost = (post) => ({type: ADD_POST, post});
 export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
-export const setProfile = (profile) => ({type: SET_PROFILE, profile:profile})
+export const setProfile = (profile) => ({type: SET_PROFILE, profile: profile})
+export const setPhoto = (photos) => ({type: SET_PHOTO, photos: photos})
 
-export const setProfileTC = (id) => (dispatch) => {
-    requestProfileApi.getUserProfile(id)
-        .then(response => {
-            dispatch(setProfile(response.data));
-        })
+
+export const setProfileTC = (id) => async (dispatch) => {
+    const response = await requestProfileApi.getUserProfile(id);
+    dispatch(setProfile(response.data));
 }
-export const getUserStatus = (id) => (dispatch) => {
-    requestProfileApi.getUserStatus(id)
-        .then(response => {
-            dispatch(setUserStatus(response.data));
-        })
+export const getUserStatus = (id) => async (dispatch) => {
+    const response = await requestProfileApi.getUserStatus(id);
+    dispatch(setUserStatus(response.data));
 }
-export const updateUserStatus = (status) => (dispatch) => {
-    requestProfileApi.updateUserStatus(status)
-        .then(response => {
-            debugger
-            !response.data.resultCode &&
-            dispatch(setUserStatus(status));
-        })
+
+
+export const updateUserStatus = (status) => async (dispatch) => {
+    const response = await requestProfileApi.updateUserStatus(status);
+    !response.data.resultCode && dispatch(setUserStatus(status));
+}
+
+export const setPhotoTC = (photo) => async (dispatch) => {
+    const response = await requestProfileApi.setPhoto(photo);
+    !response.data.resultCode && dispatch(setPhoto(response.data.data.photos));
 }
 
 export default profileReducer;

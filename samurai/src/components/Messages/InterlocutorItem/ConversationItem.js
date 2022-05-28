@@ -2,8 +2,7 @@ import React from "react";
 import './ConversationItem.css'
 import {NavLink} from "react-router-dom";
 
-const ConversationItem = (props) => {
-    const {id, interlocutor, userImage, onChangeConversation} = props;
+const ConversationItem = React.memo(({id, interlocutor, userImage, onChangeConversation}) => {
     let onClick = () => {
         onChangeConversation(id);
     }
@@ -22,7 +21,7 @@ const ConversationItem = (props) => {
             </div>
         </NavLink>
     )
-}
+})
 
 
 export default ConversationItem;

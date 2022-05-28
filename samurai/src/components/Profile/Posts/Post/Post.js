@@ -2,8 +2,7 @@ import React from "react";
 import "./Post.css";
 import RoundedAvatar from "../../../Common/RoundedAvatar/RoundedAvatar";
 
-const Post = (props) => {
-    const {name, userImage, message, likesCount} = props;
+const Post = ({name, message, likesCount}) => {
     return (
         <div className="post app-block">
             <div className='message flex'>

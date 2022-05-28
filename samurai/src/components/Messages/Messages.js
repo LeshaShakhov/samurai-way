@@ -2,27 +2,17 @@ import React from "react";
 import './Messages.css'
 import Conversation from "./Conversation/Conversation";
 import ConversationItem from "./InterlocutorItem/ConversationItem";
-import {addMessage, changeCurrentConversation, changeTextAreaMessage} from "../../redux/messagesReducer";
+import MessageForm from "./MessageForm";
 
-const Messages = (props) => {
-    const {
-        addMessage,
-        changeTextAreaMessage,
-        changeCurrentConversation,
-        conversationMembers,
-        newMessageText,
-        currentConversation,
-        currentMessages,
-        currentUserConversation,
-    } = props;
-
-    let onSubmit = (e) => {
-        addMessage();
-        e.preventDefault();
-    }
-    let onChange = (e) => {
-        changeTextAreaMessage(e.target.value);
-    }
+const Messages = ({
+                      addMessage,
+                      changeCurrentConversation,
+                      conversationMembers,
+                      currentConversation,
+                      currentMessages,
+                      currentUserConversation,
+                      ...props
+                  }) => {
     return (
         <div className='app-block'>
             <div className='text-title'>Dialogs</div>
@@ -42,19 +32,8 @@ const Messages = (props) => {
                 </div>
                 <div className="dialogs-separator"></div>
                 <div className='dialogs'>
-                    <form className='form' onSubmit={(e) => {
-                        onSubmit(e)
-                    }}>
-                        <textarea
-                            className='input'
-                            value={newMessageText}
-                            placeholder="Your message..."
-                            onChange={(e) => {
-                                onChange(e)
-                            }}
-                        />
-                        <input className='btn-primary' value='Send' type="submit"/>
-                    </form>
+
+                    <MessageForm addMessage={addMessage}/>
                     {
                         currentConversation ?
                             (currentMessages.map((message => {

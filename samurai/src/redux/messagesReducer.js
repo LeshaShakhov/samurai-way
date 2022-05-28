@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const CHANGE_TEXT_AREA_MESSAGE = 'CHANGE-TEXT-AREA-MESSAGE';
 const CHANGE_CURRENT_CONVERSATION = 'CHANGE-CURRENT-CONVERSATION';
 
 let initialState = {
@@ -95,13 +94,9 @@ let messagesReducer = (state = initialState, action) => {
                 ...state,
                 messages: [
                     ...state.messages,
-                    {id: ++state.messages.length, text: state.newMessageText, authorId: 2}
+                    {id: ++state.messages.length, text: action.message, authorId: 2}
                 ],
-                newMessageText: ''
             };
-        }
-        case CHANGE_TEXT_AREA_MESSAGE: {
-            return {...state, newMessageText: action.text}
         }
         case CHANGE_CURRENT_CONVERSATION: {
             return {...state, currentConversation: action.id}
@@ -111,11 +106,8 @@ let messagesReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessage = () => ({type: ADD_MESSAGE})
-export const changeTextAreaMessage = (text) => ({
-    type: CHANGE_TEXT_AREA_MESSAGE,
-    text: text,
-})
+export const addMessage = (message) => ({type: ADD_MESSAGE, message})
+
 export const changeCurrentConversation = (id) => ({
     type: CHANGE_CURRENT_CONVERSATION,
     id: id,

@@ -1,15 +1,12 @@
 import React from "react";
 import "./Friends.css"
+import RoundedAvatar from "../../Common/RoundedAvatar/RoundedAvatar";
 
 const Friends = (props) => {
     const friends = props.friends;
     return (
         <div className="friends">
-            {friends.map(friend =>
-                <div key={friend.userId} className="friend rounded-avatar">
-                    <img src={friend.userImage} alt=""/>
-                </div>
-            )}
+            {friends.map(friend => <RoundedAvatar className='friend' key={friend.userId} src={friend.userImage} />)}
         </div>
     )
 }

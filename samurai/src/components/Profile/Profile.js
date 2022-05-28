@@ -1,18 +1,19 @@
 import React from "react";
 import "./Profile.css";
 import UserInfo from "./UserInfo/UserInfo";
-import PostsContainer from "./Posts/PostsContainer";
+import Posts from "./Posts/Posts";
 
-const Profile = (props) => {
+const Profile = ({status, myId, updateUserStatus, setPhotoTC, isOwner, ...props}) => {
     return (
         <section>
             <UserInfo
-                status={props.status}
-                myId={props.myId}
+                status={status}
+                isOwner={isOwner}
                 profile={props.profile.profile}
-                updateUserStatus={props.updateUserStatus}
+                updateUserStatus={updateUserStatus}
+                setPhotoTC={setPhotoTC}
             />
-            <PostsContainer/>
+            <Posts/>
         </section>
     )
 }

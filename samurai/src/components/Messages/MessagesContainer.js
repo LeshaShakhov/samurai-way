@@ -1,9 +1,6 @@
 import React from "react";
 import './Messages.css'
-import {
-    addMessage, changeCurrentConversation,
-    changeTextAreaMessage,
-} from "../../redux/messagesReducer";
+import { addMessage, changeCurrentConversation} from "../../redux/messagesReducer";
 import Messages from "./Messages";
 import {connect} from "react-redux";
 import withAuthRedirect from "../../Utils/withAuthRedirect";
@@ -11,7 +8,6 @@ import {compose} from "redux";
 
 const mapStateToProps = (state) =>{
     const {
-        newMessageText,
         messages,
         users,
         currentConversation
@@ -35,7 +31,6 @@ const mapStateToProps = (state) =>{
     })
     return {
         conversationMembers: conversationMembers,
-        newMessageText: newMessageText,
         currentConversation: currentConversation,
         currentMessages: currentMessages,
         currentUserConversation: currentUserConversation,
@@ -45,5 +40,5 @@ const mapStateToProps = (state) =>{
 
 export default compose(
         withAuthRedirect,
-        connect(mapStateToProps, { addMessage, changeTextAreaMessage, changeCurrentConversation,})
+        connect(mapStateToProps, { addMessage, changeCurrentConversation,})
     )(Messages);

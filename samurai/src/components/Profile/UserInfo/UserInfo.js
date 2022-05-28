@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./UserInfo.css";
 import Preloader from "../../Common/Preloader/Preloader";
 import avatar from "../../../assets/avatar.png";
@@ -11,13 +11,30 @@ import youtube from "../../../assets/social_icons/youtube.png";
 import Status from "./Status";
 
 const UserInfo = (props) => {
+    const [isPhotoFetching, setIsPhotoFetching] = useState(false);
+
+
+    const onChangePhotoHandler = async (e) => {
+        setIsPhotoFetching(true);
+        e.target.files.length && await props.setPhotoTC(e.target.files[0]);
+    }
+
+
     if (!props.profile) {
         return <Preloader/>
     }
     return (<section>
         <div className="user-info app-block">
             <div className="avatar">
-                <img className='avatar' src={props.profile.photos.large ? props.profile.photos.large : avatar} alt=""/>
+                <img className='avatar' onLoad={()=> {setIsPhotoFetching(false);}} src={props.profile.photos.large ? props.profile.photos.large : avatar} alt=""/>
+                {isPhotoFetching && <Preloader/>}
+                {
+                    props.isOwner && !isPhotoFetching &&
+                        <>
+                            <label className='label-file-input flex-center-center' htmlFor="file-input">Choose photo-file</label>
+                            <input onChange={(e) => {onChangePhotoHandler(e)}} id='file-input' type="file"/>
+                        </>
+                }
             </div>
 
             <div className="text flex-column">

@@ -1,13 +1,11 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
 import './Login.css';
-import {connect} from "react-redux";
-import {login} from "../../redux/authReducer";
+import store from "../../redux/redux-store";
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const LoginForm = (props) => {
-    return(
+    return (
         <Formik
             initialValues={{
                 email: '',
@@ -15,18 +13,22 @@ const LoginForm = (props) => {
                 remember: false,
             }}
             onSubmit={
-                async (loginData)=> {
-                    await sleep(1000);
-                    props.login(loginData);
+                async (values, actions) => {
+                    const response = await props.login(values);
+                    if(response.data.resultCode){
+                        actions.setStatus(response.data.messages)
+                    }
+                    actions.setSubmitting(false);
                 }
             }
         >
             {
-                ( {isSubmitting} ) => (
+                ({isSubmitting, errors, status}) => (
                     <Form className='login-form'>
                         <Field type='email' name='email' placeholder='Email'/>
                         <Field type='password' name='password' placeholder='Password'/>
-                        <Field type="checkbox" name="remember" />
+                        <Field type="checkbox" name="remember"/>
+                        <div className='status'>{status}</div>
                         <button className={'btn-primary'} type={"submit"} disabled={isSubmitting}>Submit</button>
                     </Form>
                 )
@@ -35,10 +37,6 @@ const LoginForm = (props) => {
         </Formik>
     )
 }
-const mapStateToProps = (state) => {
-    return {
 
-    }
-}
 
-export default connect(mapStateToProps, {login})(LoginForm);
+export default LoginForm;
