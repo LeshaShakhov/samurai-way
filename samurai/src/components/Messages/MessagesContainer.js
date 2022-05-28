@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import withAuthRedirect from "../../Utils/withAuthRedirect";
 import {compose} from "redux";
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
     const {
         messages,
         users,

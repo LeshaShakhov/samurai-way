@@ -14,6 +14,7 @@ import {initialize} from "./redux/appReducer";
 import {connect} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import withLazyLoading from "./Utils/withLazyLoading";
+import EditInfo from "./components/EditInfo/EditInfo";
 
 const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
 
@@ -47,6 +48,8 @@ class App extends React.Component {
                         />
 
                         <Route path='/news' element={<News/>}/>
+
+                        <Route path='/edit' element={<EditInfo/>}/>
 
                         <Route path='/login' element={<LoginPage/>}/>
 

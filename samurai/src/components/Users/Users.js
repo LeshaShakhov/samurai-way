@@ -14,13 +14,13 @@ const Users = ({
     return (
         <section>
             <div className="text-title">Users</div>
-            <Paginator
-                itemsPerPage={usersPerPage}
-                totalItems={totalUsersCount}
-                currentPage={currentPage}
-                onPageChanged={onPageChanged}
-                pagesCount={PAGINATOR_PAGES_COUNT}
-            />
+            {/*<Paginator*/}
+            {/*    itemsPerPage={usersPerPage}*/}
+            {/*    totalItems={totalUsersCount}*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    onPageChanged={onPageChanged}*/}
+            {/*    pagesCount={PAGINATOR_PAGES_COUNT}*/}
+            {/*/>*/}
             {
                 users.map(user => {
                     return (

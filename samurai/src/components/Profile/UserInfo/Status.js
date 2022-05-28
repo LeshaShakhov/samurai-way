@@ -9,7 +9,9 @@ const Status = (props) => {
     }, [props.status])
 
     const activateEditMode = () => {
-        setEditMode(true)
+        if(props.isOwner){
+            setEditMode(true)
+        }
     }
     const deactivateEditMode = () => {
         setEditMode(false)
@@ -24,7 +26,7 @@ const Status = (props) => {
                 </div>
             }
             {
-                editMode &&
+                (editMode && props.isOwner) &&
                 <div className="status-edit">
                     <input
                         autoFocus={true}

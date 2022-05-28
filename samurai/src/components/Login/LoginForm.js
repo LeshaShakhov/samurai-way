@@ -24,7 +24,7 @@ const LoginForm = (props) => {
         >
             {
                 ({isSubmitting, errors, status}) => (
-                    <Form className='login-form'>
+                    <Form className='form login-form'>
                         <Field type='email' name='email' placeholder='Email'/>
                         <Field type='password' name='password' placeholder='Password'/>
                         <Field type="checkbox" name="remember"/>
