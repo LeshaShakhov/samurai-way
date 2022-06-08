@@ -1,0 +1,22 @@
+@import "../../../Variables"
+
+.error-modal
+  position: fixed
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
+  width: 200px
+  height: 80px
+  font-size: $normal-text-primary
+  padding: 10px 15px
+  background-color: $main-bg
+  z-index: 100
+  color: $text-secondary
+  text-align: center
+  .close
+    position: absolute
+    right: 10px
+    top: 10px
+    cursor: pointer
+    &:hover
+      opacity: .5

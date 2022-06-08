@@ -8,6 +8,7 @@
   margin-bottom: 15px
   .avatar-outer
     width: 180px
+    flex-shrink: 0
   .btn-primary
     width: 100%
     font-size: $normal-text-primary
@@ -15,9 +16,15 @@
   .text-title
     margin-bottom: 0
   .status
-    margin-bottom: 15px
+    margin-bottom: 20px
     .status-text
       padding: 3px 0
+      word-break: break-all
+    input
+      box-sizing: border-box
+      width: 100%
+    .error-message
+      bottom: -17px
   .details
     font-size: $normal-text-secondary
     flex-grow: 1

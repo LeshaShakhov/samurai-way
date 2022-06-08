@@ -4,15 +4,32 @@
     background-color: #ffffff
     border-radius: 5px
     padding: 20px 30px
+    .captcha-and-btn
+      justify-content: space-between
+      align-items: flex-end
+      width: 300px
+      input
+        width: 120px
+        padding: 3px
+      img
+        width: 120px
+        margin-bottom: 5px
+    .status
+      bottom: -18px
+      white-space: nowrap
+      width: 100%
+    .checkbox
+      margin-bottom: 20px
+      label
+        margin-right: 6px
     input
       &[type="password"], &[type="email"]
         padding: 8px
         width: 300px
+        box-sizing: border-box
       &[type="email"]
         margin-bottom: 15px
       &[type="password"]
         margin-bottom: 10px
-      &[type="checkbox"]
-        margin-bottom: 20px
 
 

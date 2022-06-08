@@ -40,6 +40,20 @@ body {
   text-align: right;
 }
 
+.relative {
+  position: relative;
+}
+
+.w100 {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.w50 {
+  width: 50%;
+  box-sizing: border-box;
+}
+
 .mr-15 {
   margin-right: 15px;
 }
@@ -157,7 +171,7 @@ input[type=checkbox] {
   right: 0;
   width: 50%;
   text-align: right;
-  color: maroon;
+  color: #dc3545;
   font-size: 12px;
 }
 
