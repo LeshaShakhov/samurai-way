@@ -10,7 +10,7 @@ const instanceWithFile = axios.create({
         'Content-Type': 'multipart/form-data'
     },
 });
-type SetPhotoDataResponseType = {
+export type PhotoDataResponseType = {
     photos: { small: string | null, large: string | null }
 }
 //TODO captcha logic
@@ -30,7 +30,7 @@ export const requestProfileApi = {
     setPhoto(photo: File) {
         const formData = new FormData();
         formData.append("image", photo);
-        return instanceWithFile.put<ResponseType<SetPhotoDataResponseType>>(
+        return instanceWithFile.put<ResponseType<PhotoDataResponseType>>(
             '/profile/photo', formData)
             .then(response => response.data)
     },

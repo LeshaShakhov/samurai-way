@@ -10,7 +10,8 @@ export const instance = axios.create({
 
 export enum ResponseCodes{
     Success = 0,
-    Error = 1
+    Error = 1,
+    captcha = 10
 }
 type ResponseFieldErrorType = {
     field: string

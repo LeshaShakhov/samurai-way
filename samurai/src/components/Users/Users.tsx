@@ -1,34 +1,44 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './Users.css'
 import Paginator from "../Common/Paginator/Paginator";
 import User from "./User";
-import {UsersFilterType, UserType} from "../../redux/types/types";
-import UsersTypeSelector from "./UsersTypeSelector";
 import UsersSearch from "./UsersSearch";
+import {useDispatch, useSelector} from "react-redux";
+import {DispatchType, StateType} from "../../redux/store";
+import {follow, getUsers, setCurrentPage, unFollow} from '../../redux/userSlice'
+import {UsersFilterType} from "../../redux/types/types";
+import Preloader from "../Common/Preloader/Preloader";
 
 const PAGINATOR_PAGES_COUNT = 10;// length visible pagination
 
-interface PropsTypes {
-    users: Array<UserType>
-    totalUsersCount: number
-    usersPerPage: number
-    followingInProgress: Array<number>
-    currentPage: number
-    onPageChanged: (page: number) => void
-    follow: (id: number) => void
-    unFollow: (id: number) => void
-    onSearch: (filter: UsersFilterType) => void
-    paginationValue:number
-    setPaginationValue: (value : number) => void
-}
+export const Users: React.FC<{}> = () => {
+    const {
+        usersPerPage, users, totalUsersCount,
+        currentPage, followingInProgress, filter,isFetching
+    } = useSelector((state: StateType) => state.user)
 
-const Users: React.FC<PropsTypes> = ({
-                                         users, follow, unFollow,
-                                         totalUsersCount, usersPerPage,
-                                         currentPage, onPageChanged, followingInProgress,
-                                         onSearch,paginationValue, setPaginationValue,
-                                         ...props
-                                     }) => {
+    const dispatch = useDispatch<DispatchType>()
+    const [paginationValue, setPaginationValue] = useState(0)
+
+    const onPageChanged = (page: number) => {
+        dispatch(setCurrentPage(page));
+        dispatch(getUsers({currentPage: page, usersPerPage, filter}));
+    }
+    const onSearch = (filter:UsersFilterType) => {
+        dispatch(setCurrentPage(1))
+        setPaginationValue(0);
+        dispatch(getUsers({currentPage: 1, usersPerPage, filter}));
+    }
+    const followHandler = (id:number) => {
+        dispatch(follow(id))
+    }
+    const unFollowHandler = (id:number) => {
+        dispatch(unFollow(id))
+    }
+
+    useEffect(()=>{
+        dispatch(getUsers({currentPage, usersPerPage,filter}));
+    },[])
     return (
         <>
             <div className="text-title">Users</div>
@@ -52,15 +62,13 @@ const Users: React.FC<PropsTypes> = ({
                             name={user.name} status={user.status}
                             followed={user.followed}
                             followingInProgress={followingInProgress}
-                            unFollow={unFollow} follow={follow}
+                            unFollow={unFollowHandler} follow={followHandler}
                         />
                     )
                 })
             }
             <button className='btn-primary blue'>Show more</button>
-
+            {isFetching && <Preloader/>}
         </>
     )
 }
-
-export default Users;

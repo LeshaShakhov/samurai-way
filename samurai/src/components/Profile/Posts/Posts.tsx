@@ -2,19 +2,19 @@ import React from "react";
 import "./Posts.css";
 import Post from "./Post/Post";
 import PostForm from "./PostForm";
-import {connect, ConnectedProps} from "react-redux";
-import {profileActions} from "../../../redux/profileReducer";
-import {StateType} from "../../../redux/redux-store";
+import {useSelector} from "react-redux";
+import {StateType} from "../../../redux/store";
 
-const Posts:React.FC<PropsFromReduxTypes> = ({userName, userImage, userPosts, addPost}) => {
-
+export const Posts:React.FC<{}> = () => {
+    const userPosts = useSelector((state:StateType) => state.profile.user.userPosts)
+    const userName = useSelector((state:StateType) => state.profile.profile?.fullName)
     return (
-        <section>
+        <>
             <div className='posts-input app-block'>
                 <div className='text-title'>
                     My Posts
                 </div>
-                <PostForm addPost={addPost}/>
+                <PostForm/>
             </div>
             {
                 userPosts.map( post =>
@@ -27,19 +27,6 @@ const Posts:React.FC<PropsFromReduxTypes> = ({userName, userImage, userPosts, ad
                 )
 
             }
-        </section>
+        </>
     )
 }
-
-const mapStateToProps = (state:StateType) => {
-    const {userName, userSurname, userImage, userPosts} = state.profile.user;
-    return {
-        userName: `${userName} ${userSurname}`,
-        userImage: userImage,
-        userPosts: userPosts,
-    }
-}
-
-const connector = connect(mapStateToProps, {addPost :profileActions.addPost})
-type PropsFromReduxTypes = ConnectedProps<typeof connector>
-export default connector(Posts);

@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
 import cn from "classnames";
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../../redux/store";
+import {updateUserStatus} from "../../../redux/profileSlice";
 
 type StatusTypes = {
-    updateUserStatus: (status: string)=> void
     status: string
     isOwner: boolean
 }
@@ -10,7 +12,7 @@ const Status:React.FC<StatusTypes> = (props) => {
     const [editMode, setEditMode] = useState(false);
     const [status, setStatus] = useState(props.status);
     const [error, setError] = useState<string | null>(null);
-
+    const dispatch = useDispatch<DispatchType>();
     useEffect(() => {
         setStatus(props.status)
     }, [props.status])
@@ -32,7 +34,7 @@ const Status:React.FC<StatusTypes> = (props) => {
     const deactivateEditMode = (e:  React.FocusEvent<HTMLInputElement>) => {
         if(!error) {
             setEditMode(false);
-            props.updateUserStatus(status);
+            dispatch(updateUserStatus(status));
         } else {
             e.currentTarget.focus();
         }

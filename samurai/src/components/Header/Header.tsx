@@ -1,7 +1,7 @@
 import React from "react";
 import './Header.css'
 import {NavLink} from "react-router-dom";
-import AuthorizedUser from "../Common/AuthorizedUser/AuthorizedUser";
+import {AuthorizedUser} from "../Common/AuthorizedUser/AuthorizedUser";
 import {PropsFromReduxTypes} from "./HeaderContainer";
 
 const Header:React.FC<PropsFromReduxTypes> = (props) =>{

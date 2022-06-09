@@ -1,18 +1,22 @@
 import React, {useState} from "react";
 import RoundedAvatar from "../RoundedAvatar/RoundedAvatar";
 import './AuthorizedUser.css'
-import {connect, ConnectedProps} from "react-redux";
-import {logout} from "../../../redux/authReducer";
-import {StateType} from "../../../redux/redux-store";
+import {useDispatch, useSelector} from "react-redux";
+import {DispatchType, StateType} from "../../../redux/store";
+import {logout} from "../../../redux/authSlice";
 
 
-const AuthorizedUser: React.FC<PropsFromReduxTypes> = ({id, login, email, ...props}) => {
+
+export const AuthorizedUser: React.FC<{}> = () => {
 
     const [isOpened, toggleIsOpened] = useState(false);
+    const dispatch = useDispatch<DispatchType>();
+    const {id, login, email} = useSelector((state:StateType) => state.auth.authUserData)
 
     const toggleDropDown = () => {
         toggleIsOpened(!isOpened);
     }
+    const onClickHandler = () => dispatch(logout());
     //TODO Своя автарка у авторизованного юзера
     return (
         <div className="auth flex-center-center">
@@ -23,22 +27,9 @@ const AuthorizedUser: React.FC<PropsFromReduxTypes> = ({id, login, email, ...pro
                     <p>Id: {id}</p>
                     <p>Login: {login}</p>
                     <p>Email: {email}</p>
-                    <a className='logout' onClick={props.logout}>Logout</a>
+                    <a className='logout' onClick={onClickHandler}>Logout</a>
                 </div>
             }
         </div>
     )
-
 }
-const mapStateToProps = (state: StateType) => {
-    return {
-        id:state.auth.authUserData.id,
-        login:state.auth.authUserData.login,
-        email:state.auth.authUserData.email,
-    }
-}
-const connector = connect(mapStateToProps,{logout});
-
-type PropsFromReduxTypes = ConnectedProps<typeof connector>
-
-export default connector(AuthorizedUser);

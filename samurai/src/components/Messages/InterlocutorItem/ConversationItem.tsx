@@ -1,22 +1,29 @@
 import React from "react";
 import './ConversationItem.css'
 import {NavLink} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../../redux/store";
+import {changeCurrentConversation} from "../../../redux/messageSlice";
+import cn from "classnames";
+
 type ConversationItemType = {
     id:number
     interlocutor: string
     userImage: string
-    onChangeConversation: (id:number)=>void
+    currentConversation: number | null
 }
-const ConversationItem:React.FC<ConversationItemType> = React.memo(({id, interlocutor, userImage, onChangeConversation}) => {
-    let onClick = () => {
-        onChangeConversation(id);
+export const ConversationItem:React.FC<ConversationItemType> = ({id, interlocutor, userImage, currentConversation}) => {
+
+    const dispatch = useDispatch<DispatchType>()
+
+    let onClickHandler = (e:React.MouseEvent<HTMLElement>) => {
+        e.preventDefault()
+        dispatch(changeCurrentConversation(id))
     }
     return (
-        <NavLink
-            to={`./${id}`}
-            key={id}
-            className="interlocutor flex"
-            onClick={onClick}
+        <div
+            className={cn({active: id === currentConversation},'interlocutor flex')}
+            onClick={onClickHandler}
         >
             <div className="rounded-avatar">
                 <img src={userImage} alt=""/>
@@ -24,9 +31,6 @@ const ConversationItem:React.FC<ConversationItemType> = React.memo(({id, interlo
             <div className='name'>
                 {interlocutor}
             </div>
-        </NavLink>
+        </div>
     )
-})
-
-
-export default ConversationItem;
+}

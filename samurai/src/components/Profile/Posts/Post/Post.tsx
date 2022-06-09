@@ -3,7 +3,7 @@ import "./Post.css";
 import RoundedAvatar from "../../../Common/RoundedAvatar/RoundedAvatar";
 
 type PostTypes = {
-    name: string,
+    name: string | undefined,
     message: string,
     likesCount: number
 

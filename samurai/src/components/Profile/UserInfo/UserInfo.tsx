@@ -5,34 +5,31 @@ import Status from "./Status";
 import BigAvatar from "../../Common/BigAvatar/BigAvatar";
 import SocialIcons from "../../Common/SocialIcons/SocialIcons";
 import {Link} from "react-router-dom"
-import {ProfileType} from "../../../redux/types/types";
+import {useSelector} from "react-redux";
+import {StateType} from "../../../redux/store";
 
 type UserInfoTypes = {
-    status: string
     isOwner: boolean
-    profile: ProfileType | null
-    updateUserStatus: (status: string) => void
-    setPhotoTC: (photo:File)=>void
 }
 const UserInfo: React.FC<UserInfoTypes> = (props) => {
-    if (!props.profile) {
+    const profile = useSelector((state: StateType) => state.profile.profile)
+    const status = useSelector((state: StateType) => state.profile.status)
+    if (!profile) {
         return <Preloader/>
     }
-    return (<section>
-
+    return (<>
         <div className="user-info app-block">
             <div className='flex-column avatar-outer mr-15'>
-                <BigAvatar setPhotoTC={props.setPhotoTC} photo={props.profile.photos.large} isOwner={props.isOwner}/>
-                {props.isOwner && <Link  className='btn-primary flex-center-center' to='/edit'>Edit Profile</Link>}
+                <BigAvatar photo={profile.photos.large} isOwner={props.isOwner}/>
+                {props.isOwner && <Link className='btn-primary flex-center-center' to='/edit'>Edit Profile</Link>}
             </div>
 
             <div className="text flex-column">
                 <div className='text-title'>
-                    {props.profile.fullName}
+                    {profile.fullName}
                 </div>
                 <Status
-                    updateUserStatus={props.updateUserStatus}
-                    status={props.status}
+                    status={status}
                     isOwner={props.isOwner}
                 />
                 <div className="details">
@@ -42,16 +39,16 @@ const UserInfo: React.FC<UserInfoTypes> = (props) => {
                         <div>Skills:</div>
                     </div>
                     <div className="values">
-                        <div>{props.profile.aboutMe || 'No information'}</div>
-                        <div>{props.profile.lookingForAJob ? 'Yes' : 'No'}</div>
-                        <div>{props.profile.lookingForAJobDescription || 'No information'}</div>
+                        <div>{profile.aboutMe || 'No information'}</div>
+                        <div>{profile.lookingForAJob ? 'Yes' : 'No'}</div>
+                        <div>{profile.lookingForAJobDescription || 'No information'}</div>
                     </div>
 
                 </div>
-                <SocialIcons contacts={props.profile.contacts} />
+                <SocialIcons contacts={profile.contacts}/>
             </div>
         </div>
-    </section>)
+    </>)
 }
 
 export default UserInfo;

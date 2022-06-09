@@ -141,6 +141,7 @@ body {
 .status-text {
   font-size: 13px;
   color: #939393;
+  word-break: break-word;
 }
 
 input[type=checkbox] {

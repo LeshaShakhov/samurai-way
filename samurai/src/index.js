@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import store from "./redux/redux-store";
+import {store} from "./redux/store";
 import React from 'react';
 import './index.css';
 import {BrowserRouter} from "react-router-dom";
@@ -14,7 +14,7 @@ export const rerenderDom = () => {
     root.render(
         <BrowserRouter>
             <Provider store={store}>
-                <App state={store.getState()}/>
+                <App/>
             </Provider>
         </BrowserRouter>
     );

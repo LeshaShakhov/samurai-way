@@ -1,7 +1,7 @@
 import {AuthData, UsersFilterType, UserType} from "../redux/types/types";
 import {instance, ResponseType} from "./api";
 
-type GetUsersResponseType = {
+export type GetUsersResponseType = {
     items: Array<UserType>
     totalCount: number
     error: string

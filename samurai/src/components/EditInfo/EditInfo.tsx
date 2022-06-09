@@ -1,34 +1,21 @@
 import React, {useEffect} from "react";
 import EditInfoForm from "./EditInfoForm";
-import {connect, ConnectedProps} from "react-redux";
-import {setProfileTC, updateProfileTC} from "../../redux/profileReducer";
-import {StateType} from "../../redux/redux-store";
+import {StateType} from "../../redux/store";
+import {useDispatch, useSelector} from "react-redux";
+import {DispatchType} from "../../redux/store";
+import {getProfile} from "../../redux/profileSlice";
 
-const EditInfo:React.FC<PropsFromReduxTypes> = (props) => {
-
+export const EditInfo:React.FC<{}> = () => {
+    const dispatch = useDispatch<DispatchType>()
+    const myId = useSelector((state: StateType) => state.auth.authUserData.id)
     useEffect(() => {
-        props.setProfileTC(props.myId);
+       dispatch(getProfile(myId));
     }, []);
 
     return (
         <>
         <div className='text-title'>Edit Profile</div>
-        <EditInfoForm {...props}/>
+        <EditInfoForm/>
         </>
     )
-
 };
-const mapStateToProps = (state:StateType) => {
-    return(
-        {
-            myId: state.auth.authUserData.id,
-            profile: state.profile,
-
-        }
-    )
-}
-
-const connector = connect(mapStateToProps, {setProfileTC, updateProfileTC})
-export type PropsFromReduxTypes = ConnectedProps<typeof connector>
-
-export default connector(EditInfo);

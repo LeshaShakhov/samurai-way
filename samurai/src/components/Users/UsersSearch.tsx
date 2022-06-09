@@ -1,5 +1,5 @@
 import React from "react";
-import {ErrorMessage, Field, Form, Formik, FormikValues} from "formik";
+import {Field, Form, Formik} from "formik";
 import {UsersFilterType} from "../../redux/types/types";
 type PropsType = {
     onSearch: (filter:UsersFilterType) => void

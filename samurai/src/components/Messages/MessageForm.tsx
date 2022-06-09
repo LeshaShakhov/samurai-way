@@ -1,12 +1,13 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
 import * as validators from "../../Utils/validator";
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../redux/store";
+import {addMessage} from "../../redux/messageSlice";
 
-type MessageFormType = {
-    addMessage: (message:string)=>void
-}
-const MessageForm:React.FC<MessageFormType> = (props) => {
 
+export const MessageForm:React.FC<{}> = () => {
+    const dispatch = useDispatch<DispatchType>()
     return (
         <Formik
             initialValues={{message: ''}}
@@ -15,13 +16,13 @@ const MessageForm:React.FC<MessageFormType> = (props) => {
             }
             onSubmit={
                 (values, {resetForm}) => {
-                    props.addMessage(values.message);
+                    dispatch(addMessage(values.message))
                     resetForm();
                 }
             }
         >
             {
-                ({values, isValid, errors}) => {
+                ({values}) => {
                     return (
                         <Form className='form'>
                             <Field
@@ -49,5 +50,4 @@ const MessageForm:React.FC<MessageFormType> = (props) => {
     )
 }
 
-export default MessageForm;
 

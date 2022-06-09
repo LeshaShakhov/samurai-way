@@ -1,12 +1,14 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as validators from '../../../Utils/validator'
+import {addPost} from '../../../redux/profileSlice'
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../../redux/store";
 
-type PostFormType = {
-    addPost: (post: string) => void
-}
 
-const PostForm: React.FC<PostFormType> = (props) => {
+
+const PostForm: React.FC<{}> = (props) => {
+    const dispatch = useDispatch<DispatchType>();
     return (
         <Formik
             initialValues={{
@@ -17,7 +19,7 @@ const PostForm: React.FC<PostFormType> = (props) => {
                 validators.validate('post', validators.maxLength(10))
             }
             onSubmit={(values,{resetForm})=>{
-                props.addPost(values.post);
+                dispatch(addPost(values.post));
                 resetForm();
             }}
         >

@@ -5,23 +5,24 @@ import {Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
+import {Profile} from "./components/Profile/Profile";
 import React from "react";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/LoginPage";
-import {initialize} from "./redux/appReducer";
+import {initialize} from "./redux/appSlice";
 import {connect, ConnectedProps} from "react-redux";
 import Preloader from "./components/Common/Preloader/Preloader";
 import withLazyLoading from "./Utils/withLazyLoading";
-import EditInfo from "./components/EditInfo/EditInfo";
+import {EditInfo} from "./components/EditInfo/EditInfo";
 import {Navigate} from "react-router";
 import Modal from "./components/Common/Modal/Modal";
-import {profileActions} from "./redux/profileReducer";
-import {StateType} from "./redux/redux-store";
+import {StateType} from "./redux/store";
+import {setError} from "./redux/profileSlice";
+import Messages from "./components/Messages/Messages";
+import {Users} from "./components/Users/Users";
+React.lazy(() => import('./components/Messages/Messages'));
 
-const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
-
+//TODO задействовать больше селеторов
 class App extends React.Component<PropsFromReduxType> {
     componentDidMount() {
         this.props.initialize();
@@ -29,7 +30,7 @@ class App extends React.Component<PropsFromReduxType> {
 
     render() {
         if(!this.props.isInitialized) return <Preloader/>
-        const MessagesContainerWithLazy = withLazyLoading(MessagesContainer);
+        const MessagesContainerWithLazy = withLazyLoading(Messages);
         return (
             <div className="App">
                 {this.props.error && <Modal setError={this.props.setError} error={this.props.error}/>}
@@ -38,8 +39,8 @@ class App extends React.Component<PropsFromReduxType> {
                 <div className='content'>
                     <Routes>
                         <Route path='/' element={<Navigate to="/profile" replace />} />
-                        <Route path={'/profile'} element={<ProfileContainer/>}>
-                            <Route path={':userId'} element={<ProfileContainer/>}/>
+                        <Route path={'/profile'} element={<Profile/>}>
+                            <Route path={':userId'} element={<Profile/>}/>
                         </Route>
 
                         <Route
@@ -47,7 +48,7 @@ class App extends React.Component<PropsFromReduxType> {
                             element={ <MessagesContainerWithLazy/> }
                         />
                         <Route path={'users'} element={
-                            <UsersContainer/>
+                            <Users/>
                         }
                         />
 
@@ -73,11 +74,11 @@ const mapStateToProps = (state:StateType) => {
     return{
         isInitialized: state.app.isInitialized,
         error: state.profile.error,
-        users: state.messages.users
+        users: state.message.users
     }
 }
 
-const connector = connect(mapStateToProps, {initialize, setError: profileActions.setError})
+const connector = connect(mapStateToProps, {initialize, setError})
 type PropsFromReduxType = ConnectedProps<typeof connector>
 
 export default connector(App);

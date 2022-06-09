@@ -1,15 +1,15 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
 import './Login.css';
-import {AuthData} from "../../redux/types/types";
-import {LoginDataResponseType} from "../../requestApi/requestUsersApi";
-import {ResponseType} from "../../requestApi/api";
+import {login} from "../../redux/authSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {DispatchType, StateType} from "../../redux/store";
 
-type LoginFormType = {
-    login: (values: AuthData) => Promise<ResponseType<LoginDataResponseType>>
-    captchaUrl: string | undefined
-}
-const LoginForm: React.FC<LoginFormType> = (props) => {
+
+const LoginForm: React.FC<{}> = () => {
+    const captchaUrl = useSelector((state:StateType) => state.auth.captchaUrl)
+    const error = useSelector((state:StateType) => state.auth.error)
+    const dispatch = useDispatch<DispatchType>();
     return (
         <Formik
             initialValues={{
@@ -20,16 +20,13 @@ const LoginForm: React.FC<LoginFormType> = (props) => {
             }}
             onSubmit={
                 async (values, actions) => {
-                    const response = await props.login(values);
-                    if (response.resultCode) {
-                        actions.setStatus(response.messages)
-                    }
+                    await dispatch(login(values));
                     actions.setSubmitting(false);
                 }
             }
         >
             {
-                ({isSubmitting, errors, status}) => (
+                ({isSubmitting}) => (
                     <Form className='form login-form'>
                         <Field type='email' name='email' placeholder='Email'/>
                         <Field type='password' name='password' placeholder='Password'/>
@@ -39,15 +36,15 @@ const LoginForm: React.FC<LoginFormType> = (props) => {
                         </div>
                         <div className='captcha-and-btn flex'>
                             {
-                                props.captchaUrl &&
+                                captchaUrl &&
                                 <div className='captcha flex-column w50'>
-                                    <img src={props.captchaUrl} alt=""/>
+                                    <img src={captchaUrl} alt=""/>
                                     <Field type='text' name='captcha'/>
                                 </div>
                             }
                             <div className='relative w50'>
                                 <button className={'btn-primary'} type={"submit"} disabled={isSubmitting}>Submit</button>
-                                <div className='status'>{status}</div>
+                                <div className='status'>{error}</div>
                             </div>
                         </div>
 

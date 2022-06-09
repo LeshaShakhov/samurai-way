@@ -1,30 +1,39 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./Profile.css";
+import {useDispatch, useSelector} from "react-redux";
+import {Navigate, useParams} from "react-router";
+import isObjEmpty from "../../Utils/isObjEmpty";
+import {DispatchType, StateType} from "../../redux/store";
+import {getProfile, getUserStatus} from "../../redux/profileSlice";
 import UserInfo from "./UserInfo/UserInfo";
-import Posts from "./Posts/Posts";
-import {InitialStateType} from "../../redux/profileReducer";
+import {Posts} from "./Posts/Posts";
 
-type ProfileTypes = {
-    myId:number|null
-    updateUserStatus:(status:string)=>void
-    setPhotoTC: (photo:File)=>void
-    isOwner:boolean
-    profile: InitialStateType
-}
-const Profile:React.FC<ProfileTypes> = ({myId, updateUserStatus, setPhotoTC, isOwner, ...props}) => {
+
+export const Profile: React.FC<{}> = () => {
+    const myId = useSelector((state: StateType) => state.auth.authUserData.id)
+    const dispatch = useDispatch<DispatchType>();
+
+    const preparePageData = (id: number): void => {
+        dispatch(getProfile(id))
+        dispatch(getUserStatus(id));
+    }
+
+    const params = useParams()
+
+    useEffect(() => {
+        let userId = params.userId || myId;
+        if (userId) {
+            preparePageData(+userId)
+        }
+    }, [params.userId, myId])
+
+    if (isObjEmpty(params) && !myId) return <Navigate to='/login'/>
     return (
-        <section>
+        <>
             <UserInfo
-                status={props.profile.status}
-                isOwner={isOwner}
-                profile={props.profile.profile}
-                updateUserStatus={updateUserStatus}
-                setPhotoTC={setPhotoTC}
+                isOwner={!params.userId}
             />
             <Posts/>
-        </section>
+        </>
     )
 }
-
-
-export default Profile;

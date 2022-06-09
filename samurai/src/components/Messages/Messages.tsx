@@ -1,27 +1,20 @@
 import React from "react";
 import './Messages.css'
-import Conversation from "./Conversation/Conversation";
-import ConversationItem from "./InterlocutorItem/ConversationItem";
-import MessageForm from "./MessageForm";
-import {MessageType, StaticUserType} from "../../redux/types/types";
+import {Conversation} from "./Conversation/Conversation";
+import {ConversationItem} from "./InterlocutorItem/ConversationItem";
+import {MessageForm} from "./MessageForm";
+import {useSelector} from "react-redux";
+import {getConversationMember, getConversationMembers, getCurrentMessages} from "../../redux/selectors/messageSelector";
+import {StateType} from "../../redux/store";
+import withAuthRedirect from "../../Utils/withAuthRedirect";
 
-type MessagesType = {
-    addMessage: (message:string)=>void
-    changeCurrentConversation: (id:number)=>void
-    conversationMembers: Array<StaticUserType>
-    currentConversation: number
-    currentMessages: Array<MessageType>
-    currentUserConversation: StaticUserType
-}
-const Messages:React.FC<MessagesType> = ({
-                      addMessage,
-                      changeCurrentConversation,
-                      conversationMembers,
-                      currentConversation,
-                      currentMessages,
-                      currentUserConversation,
-                      ...props
-                  }) => {
+
+export const Messages:React.FC<{}> = () => {
+    const conversationMembers = useSelector((state:StateType) => getConversationMembers(state))
+    const currentConversation = useSelector((state:StateType) => state.message.currentConversation)
+    const currentMessages = useSelector((state:StateType) => getCurrentMessages(state, currentConversation))
+    const conversationMember = useSelector((state:StateType) => getConversationMember(state, currentConversation))
+
     return (
         <div className='app-block'>
             <div className='text-title'>Dialogs</div>
@@ -30,19 +23,19 @@ const Messages:React.FC<MessagesType> = ({
                     {
                         conversationMembers.map(interlocutor =>
                             <ConversationItem
-                                onChangeConversation={changeCurrentConversation}
                                 key={interlocutor.userId}
                                 id={interlocutor.userId}
+                                currentConversation={currentConversation}
                                 interlocutor={`${interlocutor.userName} ${interlocutor.userSurname}`}
                                 userImage={interlocutor.userImage}
                             />
                         )
                     }
                 </div>
-                <div className="dialogs-separator"></div>
+                <div className="dialogs-separator"/>
                 <div className='dialogs'>
 
-                    <MessageForm addMessage={addMessage}/>
+                    <MessageForm/>
                     {
                         currentConversation ?
                             (currentMessages.map((message => {
@@ -51,7 +44,7 @@ const Messages:React.FC<MessagesType> = ({
                                     <Conversation
                                         text={text}
                                         key={id}
-                                        avatar={currentUserConversation.userImage}
+                                        avatar={conversationMember?.userImage}
                                     />)
                             }))) : (<div className='text-center'>Выберите собеседника</div>)
                     }
@@ -62,5 +55,4 @@ const Messages:React.FC<MessagesType> = ({
     )
 }
 
-
-export default Messages;
+export default withAuthRedirect(Messages)

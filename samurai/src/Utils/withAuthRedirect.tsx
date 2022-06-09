@@ -3,7 +3,7 @@ import {Navigate} from "react-router";
 import {connect, ConnectedProps} from "react-redux";
 import {StateType} from "../redux/redux-store";
 
-
+//TODO передлать на ХУКИ
 const mapStateToProps = (state:StateType) => {
     return {
         isLogin: state.auth.isLogin

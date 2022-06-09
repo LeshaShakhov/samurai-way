@@ -2,9 +2,9 @@ import React from "react";
 import './Conversation.css'
 type ConversationType = {
     text: string
-    avatar: string
+    avatar: string|undefined
 }
-const Conversation:React.FC<ConversationType> = (props) => {
+export const Conversation:React.FC<ConversationType> = (props) => {
     const {text, avatar} = props;
 
     return (
@@ -18,5 +18,3 @@ const Conversation:React.FC<ConversationType> = (props) => {
         </div>
     )
 }
-
-export default Conversation;

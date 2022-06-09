@@ -2,20 +2,23 @@ import React, {ChangeEvent, useState} from "react";
 import avatar from "../../../assets/avatar.png";
 import Preloader from "../Preloader/Preloader";
 import './BigAvatar.css'
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../../redux/store";
+import {setPhoto} from "../../../redux/profileSlice";
 type BigAvatar = {
-    setPhotoTC:(file:File)=>void
     photo: string|null
     isOwner: boolean
 }
-const BigAvatar: React.FC<BigAvatar> = ({setPhotoTC, photo, isOwner}) => {
+const BigAvatar: React.FC<BigAvatar> = ({photo, isOwner}) => {
 
     const [isPhotoFetching, setIsPhotoFetching] = useState(false);
+    const dispatch = useDispatch<DispatchType>();
 
 
     const onChangePhotoHandler = (e : ChangeEvent<HTMLInputElement>) => {
         setIsPhotoFetching(true);
         if( e.target.files?.length){
-             setPhotoTC(e.target.files[0]);
+            dispatch(setPhoto(e.target.files[0]));
         }
     }
 

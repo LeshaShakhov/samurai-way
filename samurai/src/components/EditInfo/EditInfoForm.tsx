@@ -2,13 +2,14 @@ import React, {useState} from "react";
 import {Field, Form, Formik} from "formik";
 import './EditInfoForm.css';
 import Preloader from "../Common/Preloader/Preloader";
-import {parseServerResponse} from '../../Utils/validator'
 import {useNavigate} from "react-router";
 import cn from "classnames";
-import {PropsFromReduxTypes} from "./EditInfo";
-import {ResponseType} from "../../requestApi/api";
+import {useDispatch, useSelector} from "react-redux";
+import {DispatchType, StateType} from "../../redux/store";
+import {updateProfile} from "../../redux/profileSlice";
 //TODO Проработать валидацию форм
 //TODO Проработать типы для ошибок
+//TODO Изменятеся порядок контактов
 const validateName = (value:string) => {
     let error;
     if (value.replace(/\s/g, '').length < 3) {
@@ -17,9 +18,11 @@ const validateName = (value:string) => {
     return error;
 }
 
-const EditInfoForm:React.FC<PropsFromReduxTypes> = (props) => {
-
-    const [serverErrors, setServerErrors] = useState<any>({});
+const EditInfoForm:React.FC<{}> = () => {
+    //TODO Убрать any
+    const [serverErrors, setServerErrors] = useState<any>({})
+    const profile = useSelector((state:StateType) => state.profile.profile)
+    const dispatch = useDispatch<DispatchType>()
 
     const navigate = useNavigate();
 
@@ -27,42 +30,36 @@ const EditInfoForm:React.FC<PropsFromReduxTypes> = (props) => {
         setServerErrors({...serverErrors, ...serverError});
     }
 
-    return !props.profile.profile ? <Preloader/> :
+    return !profile ? <Preloader/> :
         <>
         <div className="app-block edit-form">
-
             <Formik
                 initialValues={{
-                    aboutMe: props.profile.profile.aboutMe || '',
-                    fullName: props.profile.profile.fullName || '',
-                    lookingForAJob: props.profile.profile.lookingForAJob || false,
-                    lookingForAJobDescription: props.profile.profile.lookingForAJobDescription || '',
+                    aboutMe: profile.aboutMe || '',
+                    fullName: profile.fullName || '',
+                    lookingForAJob: profile.lookingForAJob || false,
+                    lookingForAJobDescription: profile.lookingForAJobDescription || '',
                     contacts : {
-                        facebook: props.profile.profile.contacts.facebook || '',
-                        github: props.profile.profile.contacts.github || '',
-                        instagram: props.profile.profile.contacts.instagram || '',
-                        mainLink: props.profile.profile.contacts.mainLink || '',
-                        twitter: props.profile.profile.contacts.twitter || '',
-                        vk: props.profile.profile.contacts.vk || '',
-                        website: props.profile.profile.contacts.website || '',
-                        youtube: props.profile.profile.contacts.youtube || '',
+                        facebook: profile.contacts.facebook || '',
+                        github: profile.contacts.github || '',
+                        instagram: profile.contacts.instagram || '',
+                        mainLink: profile.contacts.mainLink || '',
+                        twitter: profile.contacts.twitter || '',
+                        vk: profile.contacts.vk || '',
+                        website: profile.contacts.website || '',
+                        youtube: profile.contacts.youtube || '',
                     },
                     photos: {
-                        large: props.profile.profile.photos.large || '',
-                        small: props.profile.profile.photos.small || '',
+                        large: profile.photos.large || '',
+                        small: profile.photos.small || '',
                     }
                 }}
                 onSubmit={
                     async (values, actions) => {
                         actions.setSubmitting(true);
-                        const response = await props.updateProfileTC(values);
+                        await dispatch(updateProfile(values));
                         actions.setSubmitting(false);
-                        if(response.resultCode) {
-                            pushErrors(parseServerResponse(response.messages));
-                        } else {
-                            navigate('/profile');
-                        }
-
+                        navigate('/profile');
                     }
                 }
             >
@@ -88,7 +85,7 @@ const EditInfoForm:React.FC<PropsFromReduxTypes> = (props) => {
                                        placeholder='Write anything...'/>
                             </div>
                             {
-                                props.profile.profile && Object.keys(props.profile.profile.contacts).map(key => {
+                                profile && Object.keys(profile.contacts).map(key => {
                                     return (
                                         <div key={key} className={cn('input-wrapper formControl', {'error' : serverErrors[key]})}>
                                             {serverErrors[key] && <div className='error-message'>{serverErrors[key]}</div>}
