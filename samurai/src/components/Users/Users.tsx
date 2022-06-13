@@ -5,9 +5,10 @@ import User from "./User";
 import UsersSearch from "./UsersSearch";
 import {useDispatch, useSelector} from "react-redux";
 import {DispatchType, StateType} from "../../redux/store";
-import {follow, getUsers, setCurrentPage, unFollow} from '../../redux/userSlice'
+import {follow, getUsers, setCurrentPage, setFilter, unFollow} from '../../redux/userSlice'
 import {UsersFilterType} from "../../redux/types/types";
 import Preloader from "../Common/Preloader/Preloader";
+import {useCondSearchParams} from "../../Utils/Hooks/useCondSearchParams";
 
 const PAGINATOR_PAGES_COUNT = 10;// length visible pagination
 
@@ -19,15 +20,17 @@ export const Users: React.FC<{}> = () => {
 
     const dispatch = useDispatch<DispatchType>()
     const [paginationValue, setPaginationValue] = useState(0)
-
+    const {searchParams, setCondSearchParams} = useCondSearchParams();
     const onPageChanged = (page: number) => {
-        dispatch(setCurrentPage(page));
-        dispatch(getUsers({currentPage: page, usersPerPage, filter}));
+        dispatch(setCurrentPage(page))
+        dispatch(getUsers({currentPage: page, filter: filter}))
     }
+
     const onSearch = (filter:UsersFilterType) => {
         dispatch(setCurrentPage(1))
-        setPaginationValue(0);
-        dispatch(getUsers({currentPage: 1, usersPerPage, filter}));
+        dispatch(setFilter(filter))
+        dispatch(getUsers({currentPage: 1,filter}));
+        setPaginationValue(0)
     }
     const followHandler = (id:number) => {
         dispatch(follow(id))
@@ -36,9 +39,25 @@ export const Users: React.FC<{}> = () => {
         dispatch(unFollow(id))
     }
 
-    useEffect(()=>{
-        dispatch(getUsers({currentPage, usersPerPage,filter}));
+
+    useEffect(()=> {
+        const term = searchParams.get('term'),
+            page = searchParams.get('page'),
+            friend = searchParams.get('friend')
+
+        const actualPage = page ? Number(page) : currentPage
+        const actualFilter = {} as UsersFilterType
+        actualFilter.term = term ? term : filter.term
+        actualFilter.onlyFollowed = friend === 'true' ? true : friend === 'false' ? false : null
+        dispatch(setCurrentPage(actualPage))
+        dispatch(setFilter(actualFilter))
+        dispatch(getUsers({currentPage: actualPage, filter: actualFilter}));
     },[])
+
+    useEffect(() => {
+        setCondSearchParams({currentPage,filter})
+    },[currentPage, filter])
+
     return (
         <>
             <div className="text-title">Users</div>
@@ -52,7 +71,7 @@ export const Users: React.FC<{}> = () => {
                     paginationValue={paginationValue}
                     setPaginationValue={setPaginationValue}
                 />
-                <UsersSearch onSearch={onSearch}/>
+                <UsersSearch onSearch={onSearch} filter={filter}/>
             </div>
             {
                 users.map(user => {

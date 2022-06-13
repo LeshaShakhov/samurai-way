@@ -20,6 +20,7 @@ const Nav: React.FC<PropsFromRedux> = (props) => {
                     <li><Link className={location.pathname === '/profile'? 'active' : ''} to="profile"><span className='flex-center-center'>P</span>Profile</Link></li>
                     <li><NavLink to="messages"><span className='flex-center-center'>M</span>Messages</NavLink></li>
                     <li><NavLink to="users"><span className='flex-center-center'>F</span>Users</NavLink></li>
+                    <li><NavLink to="chat"><span className='flex-center-center'>C</span>Chat</NavLink></li>
                     <li><NavLink to="news"><span className='flex-center-center'>N</span>News</NavLink></li>
                     <li><NavLink to="music"><span className='flex-center-center'>M</span>Music</NavLink></li>
                     <li><NavLink to="settings"><span className='flex-center-center'>S</span>Settings</NavLink></li>

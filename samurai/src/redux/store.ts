@@ -5,6 +5,7 @@ import authReducer from "./authSlice";
 import messageReducer from "./messageSlice";
 import profileReducer from "./profileSlice";
 import userReducer from "./userSlice";
+import chatReducer from "./chatSlice";
 
 export const store = configureStore({
     reducer:{
@@ -14,6 +15,7 @@ export const store = configureStore({
         message: messageReducer,
         profile: profileReducer,
         user: userReducer,
+        chatSlice: chatReducer
     }
 })
 

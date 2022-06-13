@@ -1,19 +1,21 @@
 import React from "react";
 import './Messages.css'
-import {Conversation} from "./Conversation/Conversation";
+import {Message} from "../Common/Message/Message";
 import {ConversationItem} from "./InterlocutorItem/ConversationItem";
 import {MessageForm} from "./MessageForm";
 import {useSelector} from "react-redux";
-import {getConversationMember, getConversationMembers, getCurrentMessages} from "../../redux/selectors/messageSelector";
-import {StateType} from "../../redux/store";
+import {
+    getConversationMembers,
+    getCurrentConversation,
+    getCurrentMessages
+} from "../../redux/selectors/messageSelector";
 import withAuthRedirect from "../../Utils/withAuthRedirect";
 
+const Messages: React.FC<{}> = () => {
 
-export const Messages:React.FC<{}> = () => {
-    const conversationMembers = useSelector((state:StateType) => getConversationMembers(state))
-    const currentConversation = useSelector((state:StateType) => state.message.currentConversation)
-    const currentMessages = useSelector((state:StateType) => getCurrentMessages(state, currentConversation))
-    const conversationMember = useSelector((state:StateType) => getConversationMember(state, currentConversation))
+    const conversationMembers = useSelector(getConversationMembers)
+    const currentConversation = useSelector(getCurrentConversation)
+    const currentMessages = useSelector(getCurrentMessages)
 
     return (
         <div className='app-block'>
@@ -34,19 +36,19 @@ export const Messages:React.FC<{}> = () => {
                 </div>
                 <div className="dialogs-separator"/>
                 <div className='dialogs'>
-
                     <MessageForm/>
                     {
                         currentConversation ?
-                            (currentMessages.map((message => {
-                                let {text, id} = message;
+                            (currentMessages.map((mes, index) => {
+                                let {message, userName, photo} = mes;
                                 return (
-                                    <Conversation
-                                        text={text}
-                                        key={id}
-                                        avatar={conversationMember?.userImage}
+                                    <Message
+                                        message={message}
+                                        key={index}
+                                        photo={photo}
+                                        userName={userName}
                                     />)
-                            }))) : (<div className='text-center'>Выберите собеседника</div>)
+                            })) : (<div className='text-center'>Выберите собеседника</div>)
                     }
 
                 </div>

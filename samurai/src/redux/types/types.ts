@@ -9,11 +9,13 @@ export type PostType = {
     text: string
     likes: number
 }
-export type MessageType = {
-    id: number,
-    authorId: number,
-    text: string
+export type MessageAPIType = {
+    message: string
+    photo: string
+    userId: number
+    userName: string
 }
+
 export type ProfileType = {
     userId?: number
     lookingForAJob: boolean
@@ -58,7 +60,7 @@ export type StaticUserType = {
     userSurname: string,
     userImage: string,
     userPosts: Array<PostType>,
-    messages: Array<MessageType>,
+    messages: Array<MessageAPIType>,
 }
 export type UsersFilterType = {
     term:string

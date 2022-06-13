@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {MessageType, PostType, StaticMyUserType, StaticUserType} from "./types/types";
+import {MessageAPIType, PostType, StaticMyUserType, StaticUserType} from "./types/types";
 
 
 let initialState = {
@@ -16,18 +16,19 @@ let initialState = {
             {id: 3, text: 'I have very nice day!', likes: 10}
         ] as Array<PostType>,
     } as StaticMyUserType,
+
     messages: [
-        {id: 1, authorId: 2, text: 'Lorem Ipsum - это текст-"рыба",'},
-        {id: 2, authorId: 2, text: 'Hello, my name is Igor'},
-        {id: 4, authorId: 3, text: 'Hello, my name is Sasha'},
-        {id: 5, authorId: 3, text: 'I liked your ava'},
-        {id: 6, authorId: 4, text: 'I hate you'},
-        {id: 7, authorId: 4, text: 'my name is Yorik'},
-        {id: 9, authorId: 5, text: 'Hello, my name is Stanislav'},
-        {id: 10, authorId: 6, text: 'Hello, my name is Kesha'},
-        {id: 11, authorId: 7, text: 'Hello, my name is Sergey'},
-        {id: 12, authorId: 7, text: 'How are you?'},
-    ] as Array<MessageType>,
+        {userName: 'Igor',userId: 2, photo:'http://www.yorki-penza.ru/img/feya/feya_01.jpg', message: 'Lorem Ipsum - это текст-"рыба",'},
+        {userName: 'Igor',userId: 2, photo:'http://www.yorki-penza.ru/img/feya/feya_01.jpg', message: 'Hello, my name is Igor'},
+        {userName: 'Sasha',userId: 3, photo:'http://www.yorki-penza.ru/img/djey/djey_01.jpg', message: 'Hello, my name is Sasha'},
+        {userName: 'Sasha',userId: 3, photo:'http://www.yorki-penza.ru/img/djey/djey_01.jpg', message: 'I liked your ava'},
+        {userName: 'Yorik',userId: 4, photo:'https://c-fa.cdn.smule.com/rs-s35/arr/9b/60/57f41f9c-ed7e-41a6-afaf-c2886cd11e67.jpg', message: 'I hate you'},
+        {userName: 'Yorik',userId: 4, photo:'https://c-fa.cdn.smule.com/rs-s35/arr/9b/60/57f41f9c-ed7e-41a6-afaf-c2886cd11e67.jpg', message: 'my name is Yorik'},
+        {userName: 'Stanislav',userId: 5, photo:'https://catnames.ru/sites/default/files/styles/article_600/public/inline/images/prikolnye8.jpg?itok=I8zcCWtL', message: 'Hello, my name is Stanislav'},
+        {userName: 'Kesha',userId: 6, photo:'https://catnames.ru/sites/default/files/styles/article_600/public/inline/images/prikolnye9.jpg?itok=emjbNAgP', message: 'Hello, my name is Kesha'},
+        {userName: 'Sergey',userId: 7, photo:'https://catnames.ru/sites/default/files/styles/article_600/public/inline/images/prikolnye7.jpg?itok=mHFsRXtQ', message: 'Hello, my name is Sergey'},
+        {userName: 'Sergey',userId: 7, photo:'https://catnames.ru/sites/default/files/styles/article_600/public/inline/images/prikolnye7.jpg?itok=mHFsRXtQ', message: 'How are you?'},
+    ] as Array<MessageAPIType>,
     users: [
         {
             userId: 2,
@@ -96,7 +97,7 @@ const messageSlice = createSlice({
     reducers: {
         addMessage: (state:InitialState, action:PayloadAction<string>) => {
             state.messages.push(
-                {id: Math.max(0, ...state.messages.map(message => message.id)) +1 , text: action.payload, authorId: 2}
+                {message: action.payload, userId: 2, photo:'https://social-network.samuraijs.com/activecontent/images/users/24152/user.jpg?v=33', userName: 'losha'}
             )
         },
         changeCurrentConversation: (state:InitialState, action:PayloadAction<number>) => {

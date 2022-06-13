@@ -3,11 +3,13 @@ import {UsersFilterType, UserType} from "./types/types";
 import {requestUsersApi} from "../requestApi/requestUsersApi";
 import {changeObjectPropertyInArray} from "../Utils/changeObjectPropertyInArray";
 
+export const USERS_PER_PAGE = 6
+
 const initialState = {
     users: [] as Array<UserType>,
     currentPage: 1,
     totalUsersCount: 0,
-    usersPerPage: 6,
+    usersPerPage: USERS_PER_PAGE,
     isFetching: false,
     followingInProgress: [] as Array<number>,
     filter: {term:'', onlyFollowed: null} as UsersFilterType
@@ -19,13 +21,15 @@ const userSlice = createSlice({
     reducers: {
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload
+        },
+        setFilter: (state, action) => {
+            state.filter = action.payload
         }
     },
     extraReducers: builder => {
         builder
             .addCase(getUsers.pending, (state, action) => {
                 state.isFetching = true
-                state.filter = action.meta.arg.filter
             })
             .addCase(getUsers.fulfilled, (state, action) => {
                 state.users = action.payload.items
@@ -55,8 +59,8 @@ const userSlice = createSlice({
 
 export const getUsers = createAsyncThunk (
     'user/getUsers',
-    async (data: {currentPage: number, usersPerPage: number, filter: UsersFilterType}) => {
-        return await requestUsersApi.getUsers(data.currentPage, data.usersPerPage, data.filter);
+    async (data: {currentPage: number, filter: UsersFilterType}) => {
+        return await requestUsersApi.getUsers(data.currentPage, USERS_PER_PAGE, data.filter);
     }
 )
 export const follow = createAsyncThunk(
@@ -71,5 +75,5 @@ export const unFollow = createAsyncThunk(
         return await requestUsersApi.unFollow(id)
     }
 )
-export const {setCurrentPage} = userSlice.actions
+export const {setCurrentPage, setFilter} = userSlice.actions
 export default userSlice.reducer

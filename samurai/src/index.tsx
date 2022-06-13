@@ -4,11 +4,11 @@ import {store} from "./redux/store";
 import React from 'react';
 import './index.css';
 import {BrowserRouter} from "react-router-dom";
-import App from "./App";
+import { App } from "./App";
 import {Provider} from "react-redux";
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as Element | DocumentFragment);
 
 export const rerenderDom = () => {
     root.render(

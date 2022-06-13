@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import messagesReducer from "./messagesReducer";
 import profileReducer from "./profileReducer";
 import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
@@ -9,7 +8,6 @@ import navReducer from "./navReducer";
 
 const reducers = combineReducers({
     profile: profileReducer,
-    messages: messagesReducer,
     usersPage: usersReducer,
     auth: authReducer,
     app: appReducer,

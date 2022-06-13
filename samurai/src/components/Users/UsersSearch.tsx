@@ -1,15 +1,18 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
 import {UsersFilterType} from "../../redux/types/types";
+
 type PropsType = {
     onSearch: (filter:UsersFilterType) => void
+    filter: UsersFilterType
 }
-const UsersSearch: React.FC<PropsType> = ({onSearch}) => {
+const UsersSearch: React.FC<PropsType> = ({onSearch, filter}) => {
     return (
         <Formik
+            enableReinitialize
             initialValues={{
-                term: '',
-                onlyFollowed: 'null'
+                term: filter.term,
+                onlyFollowed: String(filter.onlyFollowed)
             }}
             onSubmit={(values) => {
                 const filter : UsersFilterType = {
