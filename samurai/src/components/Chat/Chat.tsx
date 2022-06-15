@@ -8,12 +8,17 @@ import {
     removeStatusListener
 } from "../../redux/chatSlice";
 import {ServerMessage} from "../Common/Modal/ServerMessage";
-import {ChatMessagesContainer} from "./ChatMessages";
 import {ChatInputs} from "./ChatInputs";
+import {AutoScroll} from "../Common/Autoscroll/AutoScroll";
+import {Message} from "../Common/Message/Message";
+import {startDialog} from "../../redux/dialogsSlice";
+import {useNavigate} from "react-router";
 
-export const Chat: React.FC<{}> = () => {
+export const Chat: React.FC<{}> = React.memo(() => {
     const dispatch = useDispatch<DispatchType>()
     const webSocketStatus = useSelector((state: StateType) => state.chatSlice.socketStatus)
+    const chatMessages = useSelector((state: StateType) => state.chatSlice.chatMessages)
+    const navigate = useNavigate()
     useEffect(() => {
         dispatch(addMessageListener())
         dispatch(addStatusListener())
@@ -22,11 +27,15 @@ export const Chat: React.FC<{}> = () => {
             dispatch(removeStatusListener())
         }
     }, [])
+    const goToDialogs = (id:number) => {
+      dispatch(startDialog(id))
+      navigate('/messages')
+    }
     return (
         <>
             {webSocketStatus == 'pending' && <ServerMessage error='Connection failed! Trying to reconnect'/>}
-            <ChatMessagesContainer/>
+            <AutoScroll items={chatMessages} Component={Message} goToDialogs={goToDialogs}/>
             <ChatInputs/>
         </>
     )
-}
+})

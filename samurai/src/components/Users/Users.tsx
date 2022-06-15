@@ -12,7 +12,7 @@ import {useCondSearchParams} from "../../Utils/Hooks/useCondSearchParams";
 
 const PAGINATOR_PAGES_COUNT = 10;// length visible pagination
 
-export const Users: React.FC<{}> = () => {
+export const Users: React.FC<{}> = React.memo(() => {
     const {
         usersPerPage, users, totalUsersCount,
         currentPage, followingInProgress, filter,isFetching
@@ -57,7 +57,6 @@ export const Users: React.FC<{}> = () => {
     useEffect(() => {
         setCondSearchParams({currentPage,filter})
     },[currentPage, filter])
-
     return (
         <>
             <div className="text-title">Users</div>
@@ -90,4 +89,4 @@ export const Users: React.FC<{}> = () => {
             {isFetching && <Preloader/>}
         </>
     )
-}
+})

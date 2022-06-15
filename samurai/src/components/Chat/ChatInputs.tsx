@@ -7,7 +7,6 @@ import {devCloseWB, sendMessageWithWS} from "../../redux/chatSlice";
 export const ChatInputs: React.FC<{}> = () => {
     const dispatch = useDispatch<DispatchType>()
     const webSocketStatus = useSelector((state: StateType) => state.chatSlice.socketStatus)
-
     return (
         <>
             <Formik
@@ -44,7 +43,10 @@ export const ChatInputs: React.FC<{}> = () => {
                     )
                 }}
             </Formik>
-            <button onClick={() => {dispatch(devCloseWB())}}>DevCloseWB</button>
+            <button onClick={() => {
+                dispatch(devCloseWB())
+            }}>DevCloseWB
+            </button>
         </>
     )
 }

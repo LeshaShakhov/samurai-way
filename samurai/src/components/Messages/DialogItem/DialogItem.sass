@@ -1,0 +1,21 @@
+@import ../../../Variables
+
+.interlocutor
+  cursor: pointer
+  padding: 5px 0
+  margin-right: 15px
+  margin-bottom: 5px
+  border-left: 2px solid transparent
+  .rounded-avatar
+    width: 35px
+    height: 35px
+    margin-right: 5px
+  .name
+    font-size: $normal-text-primary
+    display: flex
+    align-items: center
+    justify-content: flex-start
+  &:hover
+    background-color: $link-hover
+  &.active
+    border-left: 2px solid $icon-main

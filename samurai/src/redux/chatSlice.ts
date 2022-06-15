@@ -8,7 +8,7 @@ type InitialState = typeof initialState
 export type MessagePerformanceType = MessageAPIType & {id: string}
 const initialState = {
     chatMessages: [] as MessagePerformanceType[],
-    socketStatus: 'pending' as StatusType,
+    socketStatus: 'ready' as StatusType,
 };
 const chatSlice = createSlice({
     name:'chat',

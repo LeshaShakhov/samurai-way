@@ -1,22 +1,23 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
 import * as validators from "../../Utils/validator";
-import {useDispatch} from "react-redux";
-import {DispatchType} from "../../redux/store";
-import {addMessage} from "../../redux/messageSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {DispatchType, StateType} from "../../redux/store";
+import {sendMessage} from "../../redux/dialogsSlice";
 
 
 export const MessageForm:React.FC<{}> = () => {
     const dispatch = useDispatch<DispatchType>()
+    const currentDialog = useSelector((state:StateType) => state.dialogs.currentDialog)
     return (
         <Formik
             initialValues={{message: ''}}
             validate = {
-                validators.validate('message', validators.maxLength(10))
+                validators.validate('message', validators.maxLength(50))
             }
             onSubmit={
                 (values, {resetForm}) => {
-                    dispatch(addMessage(values.message))
+                    dispatch(sendMessage({id: currentDialog, body:values.message}))
                     resetForm();
                 }
             }

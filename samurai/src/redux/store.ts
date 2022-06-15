@@ -2,20 +2,20 @@ import {configureStore} from "@reduxjs/toolkit";
 import navReducer from "./navSlice";
 import appReducer from "./appSlice";
 import authReducer from "./authSlice";
-import messageReducer from "./messageSlice";
 import profileReducer from "./profileSlice";
 import userReducer from "./userSlice";
 import chatReducer from "./chatSlice";
+import dialogsSlice from "./dialogsSlice";
 
 export const store = configureStore({
     reducer:{
         nav: navReducer,
         app: appReducer,
         auth: authReducer,
-        message: messageReducer,
         profile: profileReducer,
         user: userReducer,
-        chatSlice: chatReducer
+        chatSlice: chatReducer,
+        dialogs: dialogsSlice
     }
 })
 

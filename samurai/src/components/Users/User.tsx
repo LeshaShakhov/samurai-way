@@ -9,7 +9,7 @@ interface PropsTypes extends UserType {
     follow: (id: number) => void
 }
 const User: React.FC<PropsTypes> = ({id, photos, name, status, followed, followingInProgress, unFollow, follow}) => {
-  return (
+    return (
       <div className='app-block'>
           <div className='friend-item flex'>
               <NavLink to={`/profile/${id}`}>

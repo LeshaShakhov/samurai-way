@@ -6,7 +6,7 @@ type PropsType = {
     onSearch: (filter:UsersFilterType) => void
     filter: UsersFilterType
 }
-const UsersSearch: React.FC<PropsType> = ({onSearch, filter}) => {
+const UsersSearch: React.FC<PropsType> = React.memo(({onSearch, filter}) => {
     return (
         <Formik
             enableReinitialize
@@ -47,6 +47,6 @@ const UsersSearch: React.FC<PropsType> = ({onSearch, filter}) => {
             }}
         </Formik>
     )
-}
+})
 
 export default UsersSearch;

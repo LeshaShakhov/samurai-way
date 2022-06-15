@@ -1,56 +1,42 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './Messages.css'
-import {Message} from "../Common/Message/Message";
-import {ConversationItem} from "./InterlocutorItem/ConversationItem";
+import {DialogItem} from "./DialogItem/DialogItem";
 import {MessageForm} from "./MessageForm";
-import {useSelector} from "react-redux";
-import {
-    getConversationMembers,
-    getCurrentConversation,
-    getCurrentMessages
-} from "../../redux/selectors/messageSelector";
+import {useDispatch, useSelector} from "react-redux";
+
 import withAuthRedirect from "../../Utils/withAuthRedirect";
+import {DispatchType, StateType} from "../../redux/store";
+import {getDialogs, getMessages} from "../../redux/dialogsSlice";
+import {AutoScroll} from "../Common/Autoscroll/AutoScroll";
+import {DialogMessage} from "./DialogMessages/DialogMessage";
 
 const Messages: React.FC<{}> = () => {
+    const dialogs = useSelector((state:StateType) => state.dialogs.dialogs)
+    const messages = useSelector((state:StateType) => state.dialogs.messages)
+    const dispatch = useDispatch<DispatchType>()
 
-    const conversationMembers = useSelector(getConversationMembers)
-    const currentConversation = useSelector(getCurrentConversation)
-    const currentMessages = useSelector(getCurrentMessages)
-
+    useEffect(()=>{
+        dispatch(getDialogs())
+    },[])
+    const onChangeDialog = (id:number) => {
+        dispatch(getMessages(id))
+    }
     return (
         <div className='app-block'>
             <div className='text-title'>Dialogs</div>
             <div className='flex flex-between'>
                 <div className='interlocutors'>
                     {
-                        conversationMembers.map(interlocutor =>
-                            <ConversationItem
-                                key={interlocutor.userId}
-                                id={interlocutor.userId}
-                                currentConversation={currentConversation}
-                                interlocutor={`${interlocutor.userName} ${interlocutor.userSurname}`}
-                                userImage={interlocutor.userImage}
-                            />
+                        dialogs.map(dialog =>
+                            <DialogItem key={dialog.id} {...dialog} onChangeDialog={onChangeDialog}/>
                         )
                     }
                 </div>
                 <div className="dialogs-separator"/>
                 <div className='dialogs'>
+                    <AutoScroll items={messages} Component={DialogMessage}/>
+                    {!messages.length && <div>Выберите собеседника чтобы наать диалог</div>}
                     <MessageForm/>
-                    {
-                        currentConversation ?
-                            (currentMessages.map((mes, index) => {
-                                let {message, userName, photo} = mes;
-                                return (
-                                    <Message
-                                        message={message}
-                                        key={index}
-                                        photo={photo}
-                                        userName={userName}
-                                    />)
-                            })) : (<div className='text-center'>Выберите собеседника</div>)
-                    }
-
                 </div>
             </div>
         </div>
