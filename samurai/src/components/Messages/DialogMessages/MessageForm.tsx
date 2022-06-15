@@ -1,9 +1,9 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
-import * as validators from "../../Utils/validator";
+import * as validators from "../../../Utils/validator";
 import {useDispatch, useSelector} from "react-redux";
-import {DispatchType, StateType} from "../../redux/store";
-import {sendMessage} from "../../redux/dialogsSlice";
+import {DispatchType, StateType} from "../../../redux/store";
+import {sendMessage} from "../../../redux/dialogsSlice";
 
 
 export const MessageForm:React.FC<{}> = () => {
@@ -17,7 +17,9 @@ export const MessageForm:React.FC<{}> = () => {
             }
             onSubmit={
                 (values, {resetForm}) => {
-                    dispatch(sendMessage({id: currentDialog, body:values.message}))
+                    if(currentDialog && currentDialog.id){
+                        dispatch(sendMessage({id: currentDialog.id, body:values.message}))
+                    }
                     resetForm();
                 }
             }
@@ -25,15 +27,17 @@ export const MessageForm:React.FC<{}> = () => {
             {
                 ({values}) => {
                     return (
-                        <Form className='form'>
-                            <Field
-                                type='textarea'
-                                className='input'
-                                placeholder="Your message..."
-                                name='message'
-                                value={values.message}
-                                autoComplete="off"
-                            />
+                        <Form className='form form-row'>
+                            <div className='formControl'>
+                                <Field
+                                    type='textarea'
+                                    className='input'
+                                    placeholder="Выберите собеседника чтобы начать диалог..."
+                                    name='message'
+                                    value={values.message}
+                                    autoComplete="off"
+                                />
+                            </div>
                             <button
                                 className='btn-primary'
                                 type="submit"

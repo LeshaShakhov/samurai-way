@@ -15,6 +15,7 @@ const initialState = {
         ] as Array<PostType>,
     },
     profile: null as ProfileType | null,
+    myProfile: null  as ProfileType | null,
     status: '' as string,
     error: null as null|string,
 }
@@ -52,11 +53,20 @@ const profileSlice = createSlice({
                     state.profile = action.meta.arg
                 }
             })
+            .addCase(getMyProfile.fulfilled, (state, action) => {
+                state.myProfile = action.payload
+            })
     }
 })
 
 export const getProfile = createAsyncThunk(
     'profile/getProfile',
+    async (id:number|null) =>{
+        return await requestProfileApi.getUserProfile(id);
+    }
+)
+export const getMyProfile = createAsyncThunk(
+    'profile/getMyProfile',
     async (id:number|null) =>{
         return await requestProfileApi.getUserProfile(id);
     }

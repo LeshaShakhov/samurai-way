@@ -47,15 +47,19 @@ body
 .app-block
   padding: 15px
   background-color: #fff
-
+  &.full-height
+    height: 100%
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
 .full-width
   width: 100%
-
 .content
   grid-area: main
-  padding: 15px 0 0 0
-  margin-bottom: 15px
+  padding: 15px 0 15px 0
   position: relative
+  height: 100%
+  box-sizing: border-box
 
 .App
   min-height: 100vh
@@ -63,7 +67,7 @@ body
   grid-template-columns: repeat(9, 1fr)
   grid-template-rows: auto 1fr auto
   background-color: $main-bg
-  width: 100vw
+  width: 100%
   overflow-x: hidden
 //при отсутствии полосы прокрутки сдвиг контента отн. страниц с прокруткой
 .text-title
@@ -76,14 +80,21 @@ body
   flex-direction: column
   align-items: flex-end
   margin-bottom: 15px
-
+  &.form-row
+    flex-direction: row
+    justify-content: space-between
+    .formControl
+      width: calc(100% - 170px)
+    input
+      margin-bottom: 0
+    .btn-primary
+      height: 39px
   .input
     width: 100%
     margin-bottom: 15px
     padding: 10px
     box-sizing: border-box
     resize: none
-
 .btn-primary
   width: 150px
   height: 25px
@@ -150,4 +161,11 @@ input
     text-align: right
     color: #dc3545
     font-size: 12px
+.small-gray-text
+  font-size: 10px
+  color: $gray
+  span
+    display: inline-block
+    &:nth-child(1)
+      width: 70px
 

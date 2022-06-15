@@ -17,7 +17,6 @@ const clearWSListeners = () => {
 }
 
 function openHandler() {
-    console.log('open web socket')
     ws.addEventListener('close', closeHandler)
     ws.addEventListener('message', messageHandler)
     clearInterval(interval)

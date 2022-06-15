@@ -1,4 +1,4 @@
-import {followTC, unFollowTC} from "./usersReducer";
+import {followTC, unFollowTC} from "./redux-react_old/usersReducer";
 import {requestUsersApi} from "../requestApi/requestUsersApi";
 import {ResponseCodes} from "../requestApi/api";
 jest.mock("../requestApi/requestUsersApi");

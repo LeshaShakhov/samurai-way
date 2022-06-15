@@ -62,6 +62,12 @@ body {
   padding: 15px;
   background-color: #fff;
 }
+.app-block.full-height {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
 
 .full-width {
   width: 100%;
@@ -69,9 +75,10 @@ body {
 
 .content {
   grid-area: main;
-  padding: 15px 0 0 0;
-  margin-bottom: 15px;
+  padding: 15px 0 15px 0;
   position: relative;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .App {
@@ -80,7 +87,7 @@ body {
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: auto 1fr auto;
   background-color: #edeef0;
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -95,6 +102,19 @@ body {
   flex-direction: column;
   align-items: flex-end;
   margin-bottom: 15px;
+}
+.form.form-row {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.form.form-row .formControl {
+  width: calc(100% - 170px);
+}
+.form.form-row input {
+  margin-bottom: 0;
+}
+.form.form-row .btn-primary {
+  height: 39px;
 }
 .form .input {
   width: 100%;
@@ -173,6 +193,17 @@ input[type=checkbox] {
   text-align: right;
   color: #dc3545;
   font-size: 12px;
+}
+
+.small-gray-text {
+  font-size: 10px;
+  color: #939393;
+}
+.small-gray-text span {
+  display: inline-block;
+}
+.small-gray-text span:nth-child(1) {
+  width: 70px;
 }
 
 /*# sourceMappingURL=App.css.map */

@@ -37,6 +37,6 @@ export const requestDialogsApi = {
         return instance.post(`dialogs/${id}/messages`, {body : body}).then(() => requestDialogsApi.getMessages(id))
     },
     startDialog(userId:number) {
-        return instance.put(`dialogs/${userId}`, {})
+        return instance.put(`dialogs/${userId}`, {}).then(() => requestDialogsApi.getMessages(userId))
     }
 }

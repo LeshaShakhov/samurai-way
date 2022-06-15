@@ -2,9 +2,9 @@ import React, {useEffect} from "react";
 import {Link, NavLink} from "react-router-dom";
 import "./Nav.css"
 import Friends from "./Friends/Friends";
-import {StateType} from "../../redux/redux-store";
+import {StateType} from "../../redux/redux-react_old/redux-store";
 import {connect, ConnectedProps} from "react-redux";
-import {getFriends} from "../../redux/navReducer";
+import {getFriends} from "../../redux/redux-react_old/navReducer";
 import {useLocation} from "react-router";
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import {connect, ConnectedProps} from "react-redux";
-import {StateType} from "../../redux/redux-store";
+import {StateType} from "../../redux/redux-react_old/redux-store";
 
 const HeaderContainer:React.FC<PropsFromReduxTypes> = (props)=>{
     return <Header {...props}/>

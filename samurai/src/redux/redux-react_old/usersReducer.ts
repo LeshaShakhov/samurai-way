@@ -1,9 +1,9 @@
-import {changeObjectPropertyInArray} from "../Utils/changeObjectPropertyInArray";
-import {UsersFilterType, UserType} from "./types/types";
+import {changeObjectPropertyInArray} from "../../Utils/changeObjectPropertyInArray";
+import {UsersFilterType, UserType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {ReferActionsType, StateType} from "./redux-store";
 import {Dispatch} from "redux";
-import {requestUsersApi} from "../requestApi/requestUsersApi";
+import {requestUsersApi} from "../../requestApi/requestUsersApi";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';

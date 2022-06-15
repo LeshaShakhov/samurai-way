@@ -1,7 +1,7 @@
 import React from "react";
 import {Navigate} from "react-router";
 import {connect, ConnectedProps} from "react-redux";
-import {StateType} from "../redux/redux-store";
+import {StateType} from "../redux/redux-react_old/redux-store";
 
 //TODO передлать на ХУКИ
 const mapStateToProps = (state:StateType) => {

@@ -21,7 +21,7 @@ export const ChatInputs: React.FC<{}> = () => {
             >
                 {({values}) => {
                     return (
-                        <Form className='form'>
+                        <Form className='form form-row'>
                             <div className='formControl'>
                                 <Field
                                     type='textarea'
@@ -43,10 +43,10 @@ export const ChatInputs: React.FC<{}> = () => {
                     )
                 }}
             </Formik>
-            <button onClick={() => {
-                dispatch(devCloseWB())
-            }}>DevCloseWB
-            </button>
+            {/*<button onClick={() => {*/}
+            {/*    dispatch(devCloseWB())*/}
+            {/*}}>DevCloseWB*/}
+            {/*</button>*/}
         </>
     )
 }

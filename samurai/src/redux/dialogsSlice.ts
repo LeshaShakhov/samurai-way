@@ -13,7 +13,7 @@ export type DialogMessageType = {
 const initialState = {
     dialogs: [] as Array<DialogsType>,
     messages: [] as Array<DialogMessageType>,
-    currentDialog: 0
+    currentDialog: null as null | {id: number, photos: string, userName: string}
 };
 
 const dialogsSlice = createSlice({
@@ -21,6 +21,7 @@ const dialogsSlice = createSlice({
     initialState,
     reducers: {
         setCurrentDialog(state, action){
+            console.log(action.payload)
             state.currentDialog = action.payload
         }
     },
@@ -35,6 +36,10 @@ const dialogsSlice = createSlice({
             .addCase(sendMessage.fulfilled, (state, action) => {
                 state.messages = action.payload.items
             })
+            .addCase(startDialog.fulfilled, (state, action) => {
+                state.messages = action.payload.items
+            })
+
     }
 })
 
@@ -46,8 +51,7 @@ export const getDialogs = createAsyncThunk(
 )
 export const getMessages = createAsyncThunk(
     'dialogs/getMessages',
-    async (id: number, {dispatch}) => {
-        dispatch(setCurrentDialog(id))
+    async (id: number) => {
         return await requestDialogsApi.getMessages(id);
     }
 )

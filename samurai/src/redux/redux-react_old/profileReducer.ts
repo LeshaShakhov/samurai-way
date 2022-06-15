@@ -1,8 +1,8 @@
-import {ResponseType} from "../requestApi/api";
-import {PhotoType, PostType, ProfileType} from "./types/types";
+import {ResponseType} from "../../requestApi/api";
+import {PhotoType, PostType, ProfileType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {ReferActionsType, StateType} from "./redux-store";
-import {requestProfileApi} from "../requestApi/requestProfileApi";
+import {requestProfileApi} from "../../requestApi/requestProfileApi";
 
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE = 'SET_PROFILE';

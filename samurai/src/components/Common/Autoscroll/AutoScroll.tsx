@@ -7,9 +7,11 @@ import {StateType} from "../../../redux/store";
 type AutoScrollType = {
     items: Array<DialogMessageType> | Array<MessagePerformanceType>
     Component: any //TODO убрать any type
-    goToDialogs?: (id:number) => void
+    goToDialogs?: (userId: number, photo: string, userName: string) => void
+    myPhoto?: string | null
+    currentDialog?: {id: number, photos: string, userName: string} | null
 }
-export const AutoScroll: React.FC<AutoScrollType> = React.memo(({Component, items, goToDialogs}) => {
+export const AutoScroll: React.FC<AutoScrollType> = React.memo(({Component, items, goToDialogs, myPhoto, currentDialog}) => {
     const myId = useSelector((state: StateType) => state.auth.authUserData.id)
     const messagesScrollRef = useRef<HTMLHeadingElement>(null)
     const isAutoScrolling = useRef(true)
@@ -25,8 +27,15 @@ export const AutoScroll: React.FC<AutoScrollType> = React.memo(({Component, item
     }, [items])
     return (
         <div className='items' onScroll={scrollHandler}>
-            {items.map(item => <Component key={item.id} {...item} myId={myId} goToDialogs={goToDialogs}/>)}
-            <div ref={messagesScrollRef}></div>
+            {items.map(item => <Component
+                key={item.id}
+                {...item}
+                myId={myId}
+                myPhoto={myPhoto}
+                currentDialog={currentDialog}
+                goToDialogs={goToDialogs}
+            />)}
+            <div ref={messagesScrollRef}/>
         </div>
     )
 })

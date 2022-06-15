@@ -1,9 +1,9 @@
-import {AuthMeDataResponseType, LoginDataResponseType} from "../requestApi/requestUsersApi";
-import {AuthData} from "./types/types";
+import {AuthMeDataResponseType, LoginDataResponseType} from "../../requestApi/requestUsersApi";
+import {AuthData} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {ReferActionsType, StateType} from "./redux-store";
-import {requestUsersApi} from "../requestApi/requestUsersApi";
-import {ResponseType} from "../requestApi/api";
+import {requestUsersApi} from "../../requestApi/requestUsersApi";
+import {ResponseType} from "../../requestApi/api";
 
 const initialState = {
     authUserData: {

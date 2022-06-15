@@ -1,7 +1,7 @@
-import {UsersFilterType, UserType} from "./types/types";
+import {UsersFilterType, UserType} from "../types/types";
 import {ReferActionsType, StateType} from "./redux-store";
 import {ThunkAction} from "redux-thunk";
-import {requestUsersApi} from "../requestApi/requestUsersApi";
+import {requestUsersApi} from "../../requestApi/requestUsersApi";
 
 const initialState = {
     friends: [] as Array<UserType>

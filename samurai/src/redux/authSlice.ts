@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {requestUsersApi} from "../requestApi/requestUsersApi";
 import {AuthData} from "./types/types";
+import {getMyProfile} from "./profileSlice";
 
 
 const initialState = {
@@ -52,8 +53,10 @@ const authSlice = createSlice({
 
 export const setAuthUserData = createAsyncThunk(
     'auth/setAuthUserData',
-    async () => {
-      return await requestUsersApi.getAuthUserData()
+    async (undefined, {dispatch}) => {
+      const response = await requestUsersApi.getAuthUserData()
+      dispatch(getMyProfile(response.data.id))
+      return response
     }
 )
 export const login = createAsyncThunk(

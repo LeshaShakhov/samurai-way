@@ -17,16 +17,17 @@ import {Navigate} from "react-router";
 import {DispatchType, StateType} from "./redux/store";
 import {Users} from "./components/Users/Users";
 import {useDispatch, useSelector} from "react-redux";
+import Messages from "./components/Messages/DialogMessages/Messages";
 
-const Messages = React.lazy(() => import('./components/Messages/Messages'));
+const DialogItems = React.lazy(() => import('./components/Messages/DialogItem/DialogItems'));
 const ChatPage = React.lazy(() => import('./components/Chat/ChatPage'));
 
-//TODO задействовать больше селеторов
+//TODO сделать ссылку на логин
 export const App: React.FC<{}> = () => {
     const dispatch = useDispatch<DispatchType>();
     const isInitialized = useSelector((state: StateType) => state.app.isInitialized)
     const ChatPageWithLazy = withLazyLoading(ChatPage);
-    const MessagesWithLazy = withLazyLoading(Messages);
+    const DialogItemsWithLazy = withLazyLoading(DialogItems);
 
     useEffect(() => {
         dispatch(initialize())
@@ -47,9 +48,10 @@ export const App: React.FC<{}> = () => {
                     </Route>
 
                     <Route
-                        path='/messages/*'
-                        element={<MessagesWithLazy/>}
+                        path='/messages'
+                        element={<DialogItemsWithLazy/>}
                     />
+                    <Route path={'/messages/:userId'} element={<Messages/>}/>
                     <Route path={'users'} element={
                         <Users/>
                     }

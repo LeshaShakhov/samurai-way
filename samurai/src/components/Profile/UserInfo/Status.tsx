@@ -44,7 +44,9 @@ const Status:React.FC<StatusTypes> = (props) => {
             {
                 !editMode &&
                 <div onDoubleClick={activateEditMode} className="status-text">
-                    {status || 'Кликните два раза чтобы ввести ваш статус'}
+                    {
+                        props.isOwner ? (status || 'Double click to change status') : (status || 'User don\'t set status')
+                    }
                 </div>
             }
             {
