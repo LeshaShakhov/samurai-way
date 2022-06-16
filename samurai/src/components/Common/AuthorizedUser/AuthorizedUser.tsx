@@ -12,15 +12,17 @@ export const AuthorizedUser: React.FC<{}> = () => {
     const [isOpened, toggleIsOpened] = useState(false);
     const dispatch = useDispatch<DispatchType>();
     const {id, login, email} = useSelector((state:StateType) => state.auth.authUserData)
+    const avatar = useSelector((state:StateType) => state.profile.myProfile?.photos.small)
 
     const toggleDropDown = () => {
         toggleIsOpened(!isOpened);
     }
     const onClickHandler = () => dispatch(logout());
-    //TODO Своя автарка у авторизованного юзера
     return (
         <div className="auth flex-center-center">
-            <div  onClick={ toggleDropDown } className='flex-center-center'><RoundedAvatar/><div className='triangle down'/></div>
+            <div  onClick={ toggleDropDown } className='flex-center-center'>
+                <RoundedAvatar src={avatar}/>
+                <div className='triangle down'/></div>
             {
                 isOpened &&
                 <div className="dropdown">

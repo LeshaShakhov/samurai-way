@@ -24,12 +24,14 @@ export const DialogMessage:React.FC<DialogMessageType& DialogMessagePropsType> =
     return (
         <div className={cn('dialog',{'my-message' : senderId === myId})}>
             <RoundedAvatar src={senderId === myId ? myPhoto : currentDialog?.photos}/>
-            <div className="dialog-text">
-                <b>{senderName}</b>
-                <div className='message-text'>{body}</div>
-            </div>
-            <div className='small-gray-text'>
-                {dateString}
+            <div>
+                <div className="dialog-text">
+                    <b>{senderName}</b>
+                    <div className='message-text'>{body}</div>
+                </div>
+                <div className='small-gray-text'>
+                    {dateString}
+                </div>
             </div>
         </div>
     )

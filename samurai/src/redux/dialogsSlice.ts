@@ -21,7 +21,6 @@ const dialogsSlice = createSlice({
     initialState,
     reducers: {
         setCurrentDialog(state, action){
-            console.log(action.payload)
             state.currentDialog = action.payload
         }
     },
